@@ -2,7 +2,7 @@
   
 [welcome concat me](http://blog.xiaomo.info/about) 
 
-### if you feel it helpful for you ,I hope that you can give a star. thank you!! also,there is a angular2-demo-project,if you need it and you can clone it.[angular2-demo](https://github.com/qq83387856/angular2-demo)  
+### if you feel it helpful for you ,I hope that you can give a star. thank you!! also,there is a angular2-demo-project,if you need you can clone it.[angular2-demo](https://github.com/qq83387856/angular2-demo)  
       
 because of now ng2 hasn't release version, update is fast ...    
    
