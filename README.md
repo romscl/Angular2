@@ -27,5 +27,5 @@ welcome to [xiaomo's blog](http://blog.xiaomo.info)。
 
 [click to join us](http://jq.qq.com/?_wv=1027&k=29LUKS8)  
 
-last, introduce a web site [angular.live](http://angular.live/translate/cn/about.html)
+last, introduce a web site [angular.live](http://angular.cn)
 
