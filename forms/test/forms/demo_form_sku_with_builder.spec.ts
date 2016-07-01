@@ -1,25 +1,33 @@
 import {
   it,
   describe,
-
   expect,
-
   inject,
-  async,
-  beforeEachProviders
+  async
 } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-import { FormBuilder } from '@angular/common';
-
+import { TestComponentBuilder } from '@angular/core/testing';
+import {
+  disableDeprecatedForms,
+  provideForms,
+  FormBuilder
+} from '@angular/forms';
 import { DemoFormSkuBuilder } from '../../app/ts/forms/demo_form_sku_with_builder';
 
-beforeEachProviders(() => {
-  return [FormBuilder];
-});
-
 describe('DemoFormSkuBuilder', () => {
+  let providerArr: any[];
+  beforeEach(() => {
+    providerArr = [
+      disableDeprecatedForms(),
+      provideForms(),
+      FormBuilder
+    ];
+  });
+
   it('initializes sku', async(inject([TestComponentBuilder], (tcb) => {
-    return tcb.createAsync(DemoFormSkuBuilder).then((fixture) => {
+    let fb = new FormBuilder();
+    return tcb.overrideProviders(DemoFormSkuBuilder, providerArr)
+              .createAsync(DemoFormSkuBuilder)
+              .then((fixture) => {
       let comp = fixture.debugElement.componentInstance;
       let el = fixture.debugElement.nativeElement;
 
@@ -32,4 +40,5 @@ describe('DemoFormSkuBuilder', () => {
       expect(el.querySelector('form input').value).toEqual('ABC123');
     });
   })));
+
 });

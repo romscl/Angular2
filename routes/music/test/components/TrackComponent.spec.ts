@@ -3,75 +3,78 @@ import {
   describe,
   expect,
   inject,
-  injectAsync,
-  afterEach,
-  beforeEachProviders,
+  fakeAsync,
+  addProviders
 } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-
-import {MockRouterProvider} from "../mocks/routes";
-import {MockSpotifyService} from "../mocks/spotify";
-import {TestHelper} from "../mocks/helper";
-
-import {TrackComponent} from "../../app/ts/components/TrackComponent";
-
-let mockSpotifyService: MockSpotifyService = new MockSpotifyService();
-let mockRouterProvider: MockRouterProvider = new MockRouterProvider();
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { TestComponentBuilder } from '@angular/core/testing';
+import { MockSpotifyService } from '../mocks/spotify';
+import { SpotifyService } from '../../app/ts/services/SpotifyService';
+import {
+  musicTestProviders,
+  advance,
+  createRoot,
+  RootCmp
+} from '../MusicTestHelpers';
 
 describe("TrackComponent", () => {
-  var mockSpotifyService: MockSpotifyService;
-  var mockRouterProvider: MockRouterProvider;
-  var template = `<h1 *ngIf="track">{{track.name}}</h1>`;
-
-  beforeEachProviders(() => {
-    mockSpotifyService = new MockSpotifyService();
-    mockRouterProvider = new MockRouterProvider();
-
-    return [
-      mockSpotifyService.getProviders(), mockRouterProvider.getProviders()
-    ];
+  beforeEach(() => {
+    addProviders(musicTestProviders());
   });
 
-  describe("initialization", () => {
-    it("retrieves the track", injectAsync([TestComponentBuilder], (tcb) => {
-      // makes the RouteParams return 1 as the track id
-      mockRouterProvider.setRouteParam('id', 1);
+  describe('initialization', () => {
+    it('retrieves the track', fakeAsync(
+      inject([Router, TestComponentBuilder, SpotifyService],
+             (router: Router, tcb: TestComponentBuilder,
+              mockSpotifyService: MockSpotifyService) => {
+        const fixture = createRoot(tcb, router, RootCmp);
+        advance(fixture);
 
-      return tcb.overrideTemplate(TrackComponent, template)
-        .createAsync(TrackComponent).then((fixture) => {
-          fixture.detectChanges();
-          expect(mockSpotifyService.getTrackSpy).toHaveBeenCalledWith(1);
-        });
-    }));
+        router.navigateByUrl('/tracks/1');
+        advance(fixture);
+
+        expect(mockSpotifyService.getTrackSpy).toHaveBeenCalledWith('1');
+      })));
   });
+
 
   describe('back', () => {
-    it('returns to the previous location',
-      injectAsync([TestComponentBuilder], (tcb) => {
-        return tcb.overrideTemplate(TrackComponent, template)
-          .createAsync(TrackComponent).then((fixture) => {
-            var trackComponent = fixture.debugElement.componentInstance;
-            var backSpy = mockRouterProvider.mockLocationStrategy.spy('back');
+    it('returns to the previous location', fakeAsync(
+      inject([Router, TestComponentBuilder, Location],
+             (router: Router, tcb: TestComponentBuilder, location: Location) => {
+        const fixture = createRoot(tcb, router, RootCmp);
+        expect(location.path()).toEqual('/');
 
-            trackComponent.back();
-            expect(backSpy).toHaveBeenCalled();
-          });
-      })
-    );
+        router.navigateByUrl('/tracks/1');
+        advance(fixture);
+        expect(location.path()).toEqual('/tracks/1');
+
+        const album = fixture.debugElement.children[1].componentInstance;
+        album.back();
+        advance(fixture);
+
+        expect(location.path()).toEqual('/');
+      })));
   });
 
   describe('renderTrack', () => {
-    it('renders track info', injectAsync([TestComponentBuilder], (tcb) => {
-      return tcb.overrideTemplate(TrackComponent, template)
-        .createAsync(TrackComponent).then((fixture) => {
-          var trackComponent = fixture.debugElement.componentInstance;
-          mockSpotifyService.setResponse({name: 'TRACK NAME'});
+    it('renders track info', fakeAsync(
+      inject([Router, TestComponentBuilder, SpotifyService],
+             (router: Router, tcb: TestComponentBuilder,
+              mockSpotifyService: MockSpotifyService) => {
+        const fixture = createRoot(tcb, router, RootCmp);
 
-          fixture.detectChanges();
+        let response = {
+          name: 'TRACK NAME',
+          album: { images: [{url: 'IMAGE_0.png'}, {url: 'IMAGE_1.png'}] } };
+        mockSpotifyService.setResponse(response);
 
-          var compiled = fixture.debugElement.nativeElement;
-          expect(compiled.querySelector('h1')).toHaveText('TRACK NAME');
-        });
-    }));
+        router.navigateByUrl('/tracks/1');
+        advance(fixture);
+
+        const compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('h1').innerText).toContain('TRACK NAME');
+      })));
   });
 });

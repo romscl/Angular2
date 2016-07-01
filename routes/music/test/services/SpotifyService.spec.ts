@@ -4,9 +4,8 @@ import {
   expect,
   inject,
   fakeAsync,
-  afterEach,
-  beforeEachProviders,
   tick,
+  addProviders
 } from '@angular/core/testing';
 import {MockBackend} from '@angular/http/testing';
 import {provide} from '@angular/core';
@@ -21,15 +20,17 @@ import {
 import {SpotifyService} from '../../app/ts/services/SpotifyService';
 
 describe('SpotifyService', () => {
-  beforeEachProviders(() => {
-    return [
+  beforeEach(() => {
+    addProviders([
       BaseRequestOptions,
       MockBackend,
       SpotifyService,
-      provide(Http, {useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+      provide(Http, {
+        useFactory: (backend: ConnectionBackend,
+                     defaultOptions: BaseRequestOptions) => {
         return new Http(backend, defaultOptions);
       }, deps: [MockBackend, BaseRequestOptions]}),
-    ]
+    ]);
   });
 
   // sets up an expectation that the correct URL will being requested

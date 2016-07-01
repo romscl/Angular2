@@ -6,18 +6,14 @@ import {
   inject,
   fakeAsync,
   tick,
-  afterEach,
-  beforeEachProviders
+  addProviders
 } from '@angular/core/testing';
-import {TestComponentBuilder} from '@angular/compiler/testing';
 import {MockBackend} from '@angular/http/testing';
 import {
   Http,
   ConnectionBackend,
   BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  RequestMethod,
+  Response
 } from '@angular/http';
 
 import {
@@ -27,23 +23,27 @@ import {
 } from '../app/ts/components/YouTubeSearchComponent';
 
 describe('MoreHTTPRequests (before)', () => {
-  beforeEachProviders(() => {
-    return [
+  beforeEach(() => {
+    addProviders([
       YouTubeService,
       BaseRequestOptions,
       MockBackend,
       provide(YOUTUBE_API_KEY, {useValue: 'YOUTUBE_API_KEY'}),
       provide(YOUTUBE_API_URL, {useValue: 'YOUTUBE_API_URL'}),
-      provide(Http, {useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-        return new Http(backend, defaultOptions);
-      }, deps: [MockBackend, BaseRequestOptions]}),
-    ]
+      provide(Http, {
+        useFactory: (backend: ConnectionBackend,
+                     defaultOptions: BaseRequestOptions) => {
+                       return new Http(backend, defaultOptions);
+                     },
+        deps: [MockBackend, BaseRequestOptions]
+      }),
+    ]);
   });
 
   describe('search', () => {
     it('parses YouTube response',
       inject([YouTubeService, MockBackend], fakeAsync((service, backend) => {
-        var res;
+        let res;
 
         backend.connections.subscribe(c => {
           c.mockRespond(new Response(<any>{
@@ -57,12 +57,7 @@ describe('MoreHTTPRequests (before)', () => {
                     "description": "DESCRIPTION",
                     "thumbnails": {
                       "high": { "url": "THUMBNAIL_URL" }
-                    }
-                  }
-                }
-              ]
-            }
-            `
+                    }}}]}`
           }));
         });
 

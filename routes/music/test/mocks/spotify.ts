@@ -1,6 +1,5 @@
 import {provide} from '@angular/core';
 import {SpyObject} from './helper';
-
 import {SpotifyService} from '../../app/ts/services/SpotifyService';
 
 export class MockSpotifyService extends SpyObject {

@@ -1,15 +1,13 @@
 /*
- * Angular
+ * Angular Imports
  */
-
 import {provide, Component} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {
   ROUTER_DIRECTIVES,
-  ROUTER_PROVIDERS,
-  RouteConfig,
-} from '@angular/router-deprecated';
-
+  provideRouter,
+  RouterConfig,
+} from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 /*
@@ -32,9 +30,9 @@ require('css/styles.scss');
     <nav>
       <a>Navigation:</a>
       <ul>
-        <li><a [routerLink]="['/Home']">Home</a></li>
-        <li><a [routerLink]="['/About']">About</a></li>
-        <li><a [routerLink]="['/Contact']">Contact us</a></li>
+        <li><a [routerLink]="['home']">Home</a></li>
+        <li><a [routerLink]="['about']">About</a></li>
+        <li><a [routerLink]="['contact']">Contact us</a></li>
       </ul>
     </nav>
 
@@ -42,17 +40,18 @@ require('css/styles.scss');
   </div>
   `
 })
-@RouteConfig([
-  { path: '/', name: 'root', redirectTo: ['/Home'] },
-  { path: '/home', name: 'Home', component: HomeComponent },
-  { path: '/about', name: 'About', component: AboutComponent },
-  { path: '/contact', name: 'Contact', component: ContactComponent },
-  { path: '/contactus', name: 'ContactUs', redirectTo: ['/Contact'] },
-])
 class RoutesDemoApp {
 }
 
+const routes: RouterConfig = [
+  { path: '', redirectTo: 'home', terminal: true },
+  { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'contactus', redirectTo: 'contact' },
+];
+
 bootstrap(RoutesDemoApp, [
-  ROUTER_PROVIDERS,
+  provideRouter(routes), // <-- installs our routes
   provide(LocationStrategy, {useClass: HashLocationStrategy})
 ]);

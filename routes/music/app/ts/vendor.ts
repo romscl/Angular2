@@ -10,7 +10,7 @@ import 'zone.js/dist/long-stack-trace-zone';
 import '@angular/platform-browser-dynamic';
 import '@angular/common';
 import '@angular/core';
-import '@angular/router-deprecated';
+import '@angular/router';
 import '@angular/http';
 
 // RxJS

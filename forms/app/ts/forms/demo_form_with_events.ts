@@ -1,21 +1,20 @@
-/* tslint:disable:no-string-literal */
 import { Component } from '@angular/core';
 import {
-  CORE_DIRECTIVES,
   FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
-  ControlGroup,
+  FormGroup,
   Validators,
   AbstractControl
-} from '@angular/common';
+} from '@angular/forms';
 
 @Component({
   selector: 'demo-form-with-events',
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: with events</h2>
-    <form [ngFormModel]="myForm"
+    <form [formGroup]="myForm"
           (ngSubmit)="onSubmit(myForm.value)"
           class="ui form">
 
@@ -26,7 +25,7 @@ import {
                class="form-control"
                id="skuInput"
                placeholder="SKU"
-               [ngFormControl]="sku">
+               [formControl]="sku">
          <div *ngIf="!sku.valid"
            class="ui error message">SKU is invalid</div>
          <div *ngIf="sku.hasError('required')"
@@ -42,7 +41,7 @@ import {
   `
 })
 export class DemoFormWithEvents {
-  myForm: ControlGroup;
+  myForm: FormGroup;
   sku: AbstractControl;
 
   constructor(fb: FormBuilder) {

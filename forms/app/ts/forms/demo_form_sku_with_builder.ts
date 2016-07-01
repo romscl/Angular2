@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import {
   FORM_DIRECTIVES,
+  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
-  ControlGroup
-} from '@angular/common';
+  FormGroup
+} from '@angular/forms';
 
 @Component({
   selector: 'demo-form-sku-builder',
-  directives: [FORM_DIRECTIVES],
+  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: Sku with Builder</h2>
-    <form [ngFormModel]="myForm" 
+    <form [formGroup]="myForm" 
           (ngSubmit)="onSubmit(myForm.value)"
           class="ui form">
 
@@ -20,7 +21,7 @@ import {
         <input type="text" 
                id="skuInput" 
                placeholder="SKU"
-               [ngFormControl]="myForm.controls['sku']">
+               [formControl]="myForm.controls['sku']">
       </div>
 
     <button type="submit" class="ui button">Submit</button>
@@ -29,7 +30,7 @@ import {
   `
 })
 export class DemoFormSkuBuilder {
-  myForm: ControlGroup;
+  myForm: FormGroup;
 
   constructor(fb: FormBuilder) {
     this.myForm = fb.group({

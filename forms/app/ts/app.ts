@@ -4,7 +4,8 @@
 import {
   Component
 } from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { disableDeprecatedForms, provideForms } from '@angular/forms';
 
 /* 
  * We're using Webpack to load our CSS which is why we use `require` instead of
@@ -45,7 +46,8 @@ import {DemoFormNgModel} from
                DemoFormWithValidationsExplicit,
                DemoFormWithCustomValidations,
                DemoFormWithEvents,
-               DemoFormNgModel],
+               DemoFormNgModel
+              ],
   template: `
 <div>
   <demo-form-ng-model></demo-form-ng-model>
@@ -61,4 +63,8 @@ import {DemoFormNgModel} from
 class FormsDemoApp {
 }
 
-bootstrap(FormsDemoApp);
+bootstrap(FormsDemoApp, [
+  disableDeprecatedForms(),
+  provideForms()
+])
+.catch((err: any) => console.error(err));

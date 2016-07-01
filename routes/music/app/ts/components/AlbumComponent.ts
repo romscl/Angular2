@@ -3,8 +3,8 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
-import {RouteParams, RouterLink} from '@angular/router-deprecated';
-import {LocationStrategy} from '@angular/common';
+import {ActivatedRoute, ROUTER_DIRECTIVES} from '@angular/router';
+import {Location} from '@angular/common';
 
  /*
   * Services
@@ -13,7 +13,7 @@ import {SpotifyService} from 'services/SpotifyService';
 
 @Component({
   selector: 'album',
-  directives: [RouterLink, CORE_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES],
   template: `
   <div *ngIf="album">
     <h1>{{ album.name }}</h1>
@@ -26,7 +26,7 @@ import {SpotifyService} from 'services/SpotifyService';
     <h3>Tracks</h3>
     <ol>
       <li *ngFor="let t of album.tracks.items">
-        <a [routerLink]="['/Tracks', {id: t.id}]">
+        <a [routerLink]="['/tracks', t.id]">
           {{ t.name }}
         </a>
       </li>
@@ -40,9 +40,9 @@ export class AlbumComponent implements OnInit {
   id: string;
   album: Object;
 
-  constructor(public routeParams: RouteParams, public spotify: SpotifyService,
-              public locationStrategy: LocationStrategy) {
-    this.id = routeParams.get('id');
+  constructor(public route: ActivatedRoute, public spotify: SpotifyService,
+              public location: Location) {
+    route.params.subscribe(params => { this.id = params['id']; });
   }
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class AlbumComponent implements OnInit {
   }
 
   back(): void {
-    this.locationStrategy.back();
+    this.location.back();
   }
 
   renderAlbum(res: any): void {

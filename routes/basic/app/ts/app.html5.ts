@@ -1,14 +1,13 @@
 /*
  * Angular
  */
-import {Component} from '@angular/core';
+import {provide, Component} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {
   ROUTER_DIRECTIVES,
-  ROUTER_PROVIDERS,
-  Router,
-  RouteConfig,
-} from '@angular/router-deprecated';
+  provideRouter,
+  RouterConfig,
+} from '@angular/router';
 
 /*
  * Components
@@ -40,18 +39,17 @@ require('css/styles.scss');
   </div>
   `
 })
-@RouteConfig([
-  { path: '/', name: 'root', redirectTo: ['/Home'] },
-  { path: '/home', name: 'Home', component: HomeComponent },
-  { path: '/about', name: 'About', component: AboutComponent },
-  { path: '/contact', name: 'Contact', component: ContactComponent },
-  { path: '/contactus', name: 'ContactUs', redirectTo: ['/Contact'] },
-])
 class RoutesDemoApp {
-  constructor(public router: Router) {
-  }
 }
 
+const routes: RouterConfig = [
+  { path: '', redirectTo: 'home', terminal: true },
+  { path: 'home', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'contactus', redirectTo: 'contact' },
+];
+
 bootstrap(RoutesDemoApp, [
-  ROUTER_PROVIDERS,
+  provideRouter(routes)
 ]);

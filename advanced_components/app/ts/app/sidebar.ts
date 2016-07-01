@@ -9,10 +9,13 @@ import {
   Component,
   Input
 } from '@angular/core';
+import { Location } from '@angular/common';
 import {
   ROUTER_DIRECTIVES,
-  Router
-} from '@angular/router-deprecated';
+  Router,
+  ActivatedRoute,
+  UrlPathWithParams
+} from '@angular/router';
 import { ExampleDef } from './example';
 
 /*
@@ -29,7 +32,7 @@ import { ExampleDef } from './example';
   template: `
 <a class="item" 
   [ngClass]="{ active: isActive() }"
-  [routerLink]="[item.name]">
+  [routerLink]="[item.path]">
   {{ item.label }}
 </a>
   `
@@ -37,17 +40,14 @@ import { ExampleDef } from './example';
 class SidebarItemComponent {
   @Input('item') item: ExampleDef;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, 
+              private route: ActivatedRoute,
+              private location: Location) {
   }
 
   // Checks if this current example is the selected one
   isActive(): boolean {
-    return this.isRouteActive(this.item.name);
-  }
-
-  // Here's how you determine if a current route is active in ng2
-  isRouteActive(route: string): boolean {
-    return this.router.isRouteActive(this.router.generate([route]));
+    return `/${this.item.path}` === this.location.path();
   }
 }
 

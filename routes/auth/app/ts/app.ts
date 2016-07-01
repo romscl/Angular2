@@ -4,12 +4,12 @@
 import {provide, Component} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {
+  provideRouter,
   ROUTER_DIRECTIVES,
-  ROUTER_PROVIDERS,
-
   Router,
-  RouteConfig,
-} from '@angular/router-deprecated';
+  RouterConfig,
+} from '@angular/router';
+import {provideForms} from '@angular/forms';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 /*
@@ -25,6 +25,7 @@ import {ProtectedComponent} from 'components/ProtectedComponent';
  * Services
  */
 import {AUTH_PROVIDERS} from 'services/AuthService';
+import {LoggedInGuard} from 'guards/loggedIn.guard';
 
 /*
  * Webpack
@@ -39,10 +40,10 @@ require('css/styles.scss');
     <div class="container">
       <h1>Router Sample</h1>
       <div class="navLinks">
-        <a [routerLink]="['/Home']">Home</a>
-        <a [routerLink]="['/About']">About</a>
-        <a [routerLink]="['/Contact']">Contact us</a>
-        <a [routerLink]="['/Protected']">Protected</a>
+        <a [routerLink]="['/home']">Home</a>
+        <a [routerLink]="['/about']">About</a>
+        <a [routerLink]="['/contact']">Contact us</a>
+        <a [routerLink]="['/protected']">Protected</a>
       </div>
     </div>
   </div>
@@ -59,20 +60,24 @@ require('css/styles.scss');
   </div>
   `
 })
-@RouteConfig([
-  { path: '/',          name: 'root',      redirectTo: ['Home'] },
-  { path: '/home',      name: 'Home',      component: HomeComponent },
-  { path: '/about',     name: 'About',     component: AboutComponent },
-  { path: '/contact',   name: 'Contact',   component: ContactComponent },
-  { path: '/protected', name: 'Protected', component: ProtectedComponent },
-])
 class RoutesDemoApp {
   constructor(public router: Router) {
   }
 }
 
+const routes: RouterConfig = [
+  { path: '',          redirectTo: 'home', terminal: true },
+  { path: 'home',      component: HomeComponent },
+  { path: 'about',     component: AboutComponent },
+  { path: 'contact',   component: ContactComponent },
+  { path: 'protected', component: ProtectedComponent,
+    canActivate: [LoggedInGuard]}
+];
+
 bootstrap(RoutesDemoApp, [
-  ROUTER_PROVIDERS,
+  provideRouter(routes),
   AUTH_PROVIDERS,
-  provide(LocationStrategy, {useClass: HashLocationStrategy})
+  LoggedInGuard,
+  provide(LocationStrategy, {useClass: HashLocationStrategy}),
+  provideForms()
 ]);

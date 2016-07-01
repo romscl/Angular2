@@ -1,50 +1,52 @@
 import {
   it,
   describe,
-
   expect,
   inject,
   async,
   fakeAsync,
   tick,
-
-  beforeEachProviders,
-
+  addProviders
 } from '@angular/core/testing';
 import {
-  CORE_DIRECTIVES,
-  FORM_DIRECTIVES,
-} from '@angular/common';
-import { TestComponentBuilder, ComponentFixture } from '@angular/compiler/testing';
-import { dispatchEvent } from '@angular/platform-browser/testing';
+  TestComponentBuilder,
+  ComponentFixture 
+} from '@angular/core/testing';
+import {
+  disableDeprecatedForms,
+  provideForms,
+  FormBuilder
+} from '@angular/forms';
 import { By } from '@angular/platform-browser/src/dom/debug/by';
-import { FormBuilder } from '@angular/common';
-
 import { DemoFormWithValidationsShorthand } from '../../app/ts/forms/demo_form_with_validations_shorthand';
+import {
+  dispatchEvent,
+  ConsoleSpy
+} from '../util';
 
 describe('DemoFormWithValidationsShorthand', () => {
-  var _console;
-  var fakeConsole;
-  var el, input, form;
+  let originalConsole, fakeConsole;
+  let el, input, form;
 
   beforeEach(() => {
-    // declare a fake console to track all the logs
-    fakeConsole = {};
-    fakeConsole._logs = [];
-    fakeConsole.log = (...theArgs) => fakeConsole._logs.push(theArgs.join(' '));
-
-    // replace the real console with our fake version
-    _console = window.console;
+    // replace the real window.console with our spy
+    fakeConsole = new ConsoleSpy();
+    originalConsole = window.console; 
     (<any>window).console = fakeConsole;
+
+    addProviders([
+      disableDeprecatedForms(),
+      provideForms(),
+      FormBuilder
+    ]);
   });
 
-  // restores the real console
-  afterAll(() => (<any>window).console = _console);
-
-  beforeEachProviders(() => { return [FormBuilder]; });
+  // restore real console
+  afterAll(() => (<any>window).console = originalConsole);
 
   function createComponent(tcb: TestComponentBuilder): Promise<ComponentFixture<any>> {
-    return tcb.createAsync(DemoFormWithValidationsShorthand).then((fixture) => {
+    return tcb.createAsync(DemoFormWithValidationsShorthand)
+              .then((fixture) => {
       el = fixture.debugElement.nativeElement;
       input = fixture.debugElement.query(By.css("input")).nativeElement;
       form = fixture.debugElement.query(By.css("form")).nativeElement;
@@ -62,8 +64,8 @@ describe('DemoFormWithValidationsShorthand', () => {
 
       // no value on sku field, all error messages are displayed
       let msgs = el.querySelectorAll('.ui.error.message');
-      expect(msgs[0]).toHaveText('SKU is invalid');
-      expect(msgs[1]).toHaveText('SKU is required');
+      expect(msgs[0].innerHTML).toContain('SKU is invalid');
+      expect(msgs[1].innerHTML).toContain('SKU is required');
     });
   })));
 
@@ -89,7 +91,7 @@ describe('DemoFormWithValidationsShorthand', () => {
         dispatchEvent(form, 'submit');
         tick();
 
-        expect(fakeConsole._logs).toContain('you submitted value: XYZ');
+        expect(fakeConsole.logs).toContain('you submitted value: XYZ');
       });
     })
   ));

@@ -1,49 +1,42 @@
 import {
   it,
   describe,
-
   expect,
   inject,
-
   fakeAsync,
   tick,
-
-
-
 } from '@angular/core/testing';
-import { TestComponentBuilder, ComponentFixture } from '@angular/compiler/testing';
-import { dispatchEvent } from '@angular/platform-browser/testing';
+import { TestComponentBuilder, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser/src/dom/debug/by';
-
 import { DemoFormSku } from '../../app/ts/forms/demo_form_sku';
+import {
+  dispatchEvent,
+  ConsoleSpy
+} from '../util';
 
-describe('DemoFormSku', () => {
-  var _console;
-  var fakeConsole;
-  var el, input, form;
-
+describe('DemoFormSku Component', () => {
+  let originalConsole, fakeConsole;
+  let el, input, form;
+  
   beforeEach(() => {
-    // declare a fake console to track all the logs
-    fakeConsole = {};
-    fakeConsole._logs = [];
-    fakeConsole.log = (...theArgs) => fakeConsole._logs.push(theArgs.join(' '));
-    fakeConsole.warn = (...theArgs) => fakeConsole._logs.push(theArgs.join(' '));
-    // replace the real console with our fake version
-    _console = window.console;
+    // replace the real window.console with our spy
+    fakeConsole = new ConsoleSpy();
+    originalConsole = window.console; 
     (<any>window).console = fakeConsole;
   });
 
-  // restores the real console
-  afterAll(() => (<any>window).console = _console);
+  // restore real console
+  afterAll(() => (<any>window).console = originalConsole);
 
   function createComponent(tcb: TestComponentBuilder): Promise<ComponentFixture<any>> {
-    return tcb.createAsync(DemoFormSku).then((fixture) => {
-      el = fixture.debugElement.nativeElement;
-      input = fixture.debugElement.query(By.css("input")).nativeElement;
-      form = fixture.debugElement.query(By.css("form")).nativeElement;
-      fixture.detectChanges();
+    return tcb.createAsync(DemoFormSku)
+      .then((fixture) => {
+        el = fixture.debugElement.nativeElement;
+        input = fixture.debugElement.query(By.css('input')).nativeElement;
+        form = fixture.debugElement.query(By.css('form')).nativeElement;
+        fixture.detectChanges();
 
-      return fixture;
+        return fixture;
     });
   }
 
@@ -59,7 +52,7 @@ describe('DemoFormSku', () => {
         dispatchEvent(form, 'submit');
         tick();
 
-        expect(fakeConsole._logs).toContain('you submitted value: [object Object]');
+        expect(fakeConsole.logs).toContain('you submitted value: [object Object]');
       });
     })
   ));

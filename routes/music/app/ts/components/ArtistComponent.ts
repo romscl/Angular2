@@ -3,8 +3,8 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
-import {RouteParams} from '@angular/router-deprecated';
-import {LocationStrategy} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 /*
  * Services
@@ -30,9 +30,9 @@ export class ArtistComponent implements OnInit {
   id: string;
   artist: Object;
 
-  constructor(public routeParams: RouteParams, public spotify: SpotifyService,
-              public locationStrategy: LocationStrategy) {
-    this.id = routeParams.get('id');
+  constructor(public route: ActivatedRoute, public spotify: SpotifyService,
+              public location: Location) {
+    route.params.subscribe(params => { this.id = params['id']; });
   }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class ArtistComponent implements OnInit {
   }
 
   back(): void {
-    this.locationStrategy.back();
+    this.location.back();
   }
 
   renderArtist(res: any): void {

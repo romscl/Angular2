@@ -1,5 +1,5 @@
 /*
- * Angular
+ * Angular Imports
  */
 import {
   Component,
@@ -8,15 +8,15 @@ import {
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {
-
   ROUTER_DIRECTIVES,
-  ROUTER_PROVIDERS,
-  ROUTER_PRIMARY_COMPONENT,
-
-  Router,
-  RouteConfig,
-} from '@angular/router-deprecated';
-import {LocationStrategy, HashLocationStrategy, APP_BASE_HREF} from '@angular/common';
+  provideRouter,
+  RouterConfig
+} from '@angular/router';
+import {
+  LocationStrategy,
+  HashLocationStrategy,
+  APP_BASE_HREF
+} from '@angular/common';
 
 /*
  * Components
@@ -30,6 +30,7 @@ import {AlbumComponent} from 'components/AlbumComponent';
  * Services
  */
 import {SPOTIFY_PROVIDERS} from 'services/SpotifyService';
+import {provideForms} from '@angular/forms';
 
 /*
  * Webpack
@@ -43,25 +44,25 @@ require('css/styles.scss');
   <router-outlet></router-outlet>
   `
 })
-@RouteConfig([
-  { path: '/', name: 'root', redirectTo: ['Search'] },
-  { path: '/search', name: 'Search', component: SearchComponent },
-  { path: '/artists/:id', name: 'Artists', component: ArtistComponent },
-  { path: '/tracks/:id', name: 'Tracks', component: TrackComponent },
-  { path: '/albums/:id', name: 'Albums', component: AlbumComponent },
-])
 class RoutesDemoApp {
   query: string;
-
-  constructor(public router: Router) {
-  }
 }
 
+const routes: RouterConfig = [
+  { path: '', redirectTo: 'search', terminal: true },
+  { path: 'search', component: SearchComponent },
+  { path: 'artists/:id', component: ArtistComponent },
+  { path: 'tracks/:id', component: TrackComponent },
+  { path: 'albums/:id', component: AlbumComponent },
+];
+
+const ROUTER_PROVIDER = provideRouter(routes);
+
 bootstrap(RoutesDemoApp, [
-  ROUTER_PROVIDERS,
+  ROUTER_PROVIDER,
   HTTP_PROVIDERS,
   SPOTIFY_PROVIDERS,
-  provide(ROUTER_PRIMARY_COMPONENT, {useValue: RoutesDemoApp}),
   provide(APP_BASE_HREF,            {useValue: '/'}),
-  provide(LocationStrategy,         {useClass: HashLocationStrategy})
+  provide(LocationStrategy,         {useClass: HashLocationStrategy}),
+  provideForms()
 ]).catch((err: any) => console.error(err));

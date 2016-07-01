@@ -5,10 +5,10 @@ import {bind, Component} from '@angular/core';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {
   ROUTER_DIRECTIVES,
-  ROUTER_BINDINGS,
+  provideRouter,
   Router,
-  RouteConfig,
-} from '@angular/router-deprecated';
+  RouterConfig
+} from '@angular/router';
 
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
@@ -16,7 +16,10 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
  * Components
  */
 import {HomeComponent} from 'components/HomeComponent';
-import {ProductsComponent} from 'components/ProductsComponent';
+import {
+  routes as childRoutes,
+  ProductsComponent
+} from 'components/ProductsComponent';
 
 /*
  * Webpack
@@ -31,8 +34,8 @@ require('css/styles.scss');
     <div class="container">
       <h1>Router Sample</h1>
       <div class="navLinks">
-        <a [routerLink]="['Home']">Home</a>
-        <a [routerLink]="['Products']">Products</a>
+        <a [routerLink]="['/home']">Home</a>
+        <a [routerLink]="['/products']">Products</a>
       </div>
     </div>
   </div>
@@ -44,16 +47,18 @@ require('css/styles.scss');
   </div>
   `
 })
-@RouteConfig([
-  { path: '/home', name: 'Home', component: HomeComponent, useAsDefault: true },
-  { path: '/products/...', name: 'Products', component: ProductsComponent },
-])
 class RoutesDemoApp {
   constructor(public router: Router) {
   }
 }
 
+const routes: RouterConfig = [
+  { path: '', redirectTo: 'home', terminal: true },
+  { path: 'home', component: HomeComponent },
+  { path: 'products', component: ProductsComponent, children: childRoutes }
+];
+
 bootstrap(RoutesDemoApp, [
-  ROUTER_BINDINGS,
+  provideRouter(routes),
   bind(LocationStrategy).toClass(HashLocationStrategy)
 ]);

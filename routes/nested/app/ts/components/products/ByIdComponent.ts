@@ -1,8 +1,8 @@
 /*
  * Angular
  */
-import {Component} from '@angular/core';
-import {RouteParams} from '@angular/router-deprecated';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'byid',
@@ -11,7 +11,7 @@ import {RouteParams} from '@angular/router-deprecated';
 export class ByIdComponent {
   id: string;
 
-  constructor(public routeParams: RouteParams) {
-    this.id = routeParams.get('id');
+  constructor(public route: ActivatedRoute) {
+    route.params.subscribe(params => { this.id = params['id']; });
   }
 }

@@ -13,10 +13,10 @@ import {
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import {
   ROUTER_DIRECTIVES,
-  ROUTER_PROVIDERS,
-  RouteDefinition,
+  RouterConfig,
+  provideRouter,
   Router
-} from '@angular/router-deprecated';
+} from '@angular/router';
 import {
   APP_BASE_HREF,
   LocationStrategy,
@@ -47,24 +47,30 @@ import './assets';
  * Here's the master list of our examples for this chapter.
  */
 let examples: ExampleDef[] = [ /* tslint:disable:max-line-length */
-  {label: 'Intro',                            name: 'Root',                       path: '/',                       component: IntroComponent},
-  {label: 'Styling',                          name: 'Styling',                    path: '/styling',                component: StyleSampleApp },
-  {label: 'Modifying the Host (Step 1)',      name: 'Host1',                      path: '/host-step-1',            component: HostSampleApp1, dev: true},
-  {label: 'Modifying the Host (Step 2)',      name: 'Host2',                      path: '/host-step-2',            component: HostSampleApp2, dev: true},
-  {label: 'Modifying the Host (Step 3)',      name: 'Host3',                      path: '/host-step-3',            component: HostSampleApp3, dev: true},
-  {label: 'Modifying the Host (Step 4)',      name: 'Host4',                      path: '/host-step-4',            component: HostSampleApp4, dev: true},
-  {label: 'Modifying the Host',               name: 'Host',                       path: '/host-final',             component: HostSampleApp},
-  {label: 'Tabs - Component Querying',        name: 'Tabs',                       path: '/tabs',                   component: TabsSampleApp},
-  {label: 'Lifecycle 1 - OnInit / OnDestroy', name: 'Lifecycle1',                 path: '/lifecycle-hooks-1',      component: LifecycleSampleApp1 },
-  {label: 'Lifecycle 2 - OnChanges',          name: 'Lifecycle2',                 path: '/lifecycle-hooks-2',      component: LifecycleSampleApp2 },
-  {label: 'Lifecycle 3 - Differs',            name: 'Lifecycle3',                 path: '/lifecycle-hooks-3',      component: LifecycleSampleApp3 },
-  {label: 'Lifecycle 4 - Full',               name: 'Lifecycle4',                 path: '/lifecycle-hooks-4',      component: LifecycleSampleApp4 },
-  {label: 'ngBookFor',                        name: 'NgBookFor',                  path: '/ng-book-for',            component: ForTemplateSampleApp },
-  {label: 'ngBookIf',                         name: 'NgBookIf',                   path: '/ng-book-if',             component: IfTemplateSampleApp },
-  {label: 'Transclusion',                     name: 'Transclusion',               path: '/transclusion',           component: TransclusionSampleApp },
+  {label: 'Intro',                            name: 'Root',                       path: '',                       component: IntroComponent},
+  {label: 'Styling',                          name: 'Styling',                    path: 'styling',                component: StyleSampleApp },
+  {label: 'Modifying the Host (Step 1)',      name: 'Host1',                      path: 'host-step-1',            component: HostSampleApp1, dev: true},
+  {label: 'Modifying the Host (Step 2)',      name: 'Host2',                      path: 'host-step-2',            component: HostSampleApp2, dev: true},
+  {label: 'Modifying the Host (Step 3)',      name: 'Host3',                      path: 'host-step-3',            component: HostSampleApp3, dev: true},
+  {label: 'Modifying the Host (Step 4)',      name: 'Host4',                      path: 'host-step-4',            component: HostSampleApp4, dev: true},
+  {label: 'Modifying the Host',               name: 'Host',                       path: 'host-final',             component: HostSampleApp},
+  {label: 'Tabs - Component Querying',        name: 'Tabs',                       path: 'tabs',                   component: TabsSampleApp},
+  {label: 'Lifecycle 1 - OnInit / OnDestroy', name: 'Lifecycle1',                 path: 'lifecycle-hooks-1',      component: LifecycleSampleApp1 },
+  {label: 'Lifecycle 2 - OnChanges',          name: 'Lifecycle2',                 path: 'lifecycle-hooks-2',      component: LifecycleSampleApp2 },
+  {label: 'Lifecycle 3 - Differs',            name: 'Lifecycle3',                 path: 'lifecycle-hooks-3',      component: LifecycleSampleApp3 },
+  {label: 'Lifecycle 4 - Full',               name: 'Lifecycle4',                 path: 'lifecycle-hooks-4',      component: LifecycleSampleApp4 },
+  {label: 'ngBookFor',                        name: 'NgBookFor',                  path: 'ng-book-for',            component: ForTemplateSampleApp },
+  {label: 'ngBookIf',                         name: 'NgBookIf',                   path: 'ng-book-if',             component: IfTemplateSampleApp },
+  {label: 'Transclusion',                     name: 'Transclusion',               path: 'transclusion',           component: TransclusionSampleApp },
   {label: 'Change Detection - OnPush',        name: 'ChangeDetectionOnPush',      path: 'change-detection-onpush', component: OnPushChangeDetectionSampleApp },
   {label: 'Change Detection - Observables',   name: 'ChangeDetectionObservables', path: 'change-detection-observ', component: ObservableChangeDetectionSampleApp },
 ]; /* tslint:enable:max-line-length */
+
+// dynamically configure the router based on our ExampleDefs
+const routes: RouterConfig = examples
+  .map( (example: ExampleDef) => ({
+    path: example.path, component: example.component, terminal: true
+  }));
 
 @Component({
   selector: 'advanced-components-app',
@@ -102,19 +108,13 @@ class AdvancedComponentsApp {
 
   constructor(private router: Router) {
     this.examples = examples; // store the outer examples
-
-    // dynamically configure the router based on our ExampleDefs
-    let routeDefinitions: RouteDefinition[] = examples
-      .map( (example: ExampleDef) => <RouteDefinition>({
-        path: example.path, name: example.name, component: example.component
-      }));
-    router.config(routeDefinitions);
   }
 }
 
 bootstrap(AdvancedComponentsApp, [
-  ROUTER_PROVIDERS,
+  provideRouter(routes),
   provide(APP_BASE_HREF,            {useValue: '/'}),
   provide(LocationStrategy,         {useClass: HashLocationStrategy})
 ]).catch((err: any) => console.error(err));
+
 
