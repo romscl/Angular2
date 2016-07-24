@@ -12,7 +12,7 @@
     },
     {
       "name": "TypeScript",
-      "examples": []
+      "examples": ["angular2","typescript"]
     },
     {
       "name": "How Angular Works demo",
