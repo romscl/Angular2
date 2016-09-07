@@ -1,7 +1,6 @@
 import {DebugElement} from '@angular/core/src/debug/debug_node';
 import {Response, ResponseOptions} from '@angular/http';
-import {By} from '@angular/platform-browser/src/dom/debug/by';
-import {StringMapWrapper} from '@angular/core/src/facade/collection';
+import {By} from '@angular/platform-browser';
 
 class MockResponse extends Response {
   _json: any;
@@ -113,18 +112,6 @@ export class SpyObject {
   }
 
   prop(name, value) { this[name] = value; }
-
-  static stub(object = null, config = null, overrides = null) {
-    if (!(object instanceof SpyObject)) {
-      overrides = config;
-      config = object;
-      object = new SpyObject();
-    }
-
-    var m = StringMapWrapper.merge(config, overrides);
-    StringMapWrapper.forEach(m, (value, key) => { object.spy(key).andReturn(value); });
-    return object;
-  }
 
   /** @internal */
   _createGuinnessCompatibleSpy(name): GuinessCompatibleSpy {

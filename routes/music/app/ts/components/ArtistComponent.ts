@@ -2,7 +2,6 @@
  * Angular
  */
 import {Component, OnInit} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -13,7 +12,6 @@ import {SpotifyService} from 'services/SpotifyService';
 
 @Component({
   selector: 'artist',
-  directives: [CORE_DIRECTIVES],
   template: `
   <div *ngIf="artist">
     <h1>{{ artist.name }}</h1>

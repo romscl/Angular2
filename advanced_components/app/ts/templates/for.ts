@@ -1,6 +1,7 @@
-import { Component,
+import {
+  NgModule,
+  Component,
   Directive,
-
   ChangeDetectorRef,
   ViewRef,
   ViewContainerRef,
@@ -56,7 +57,6 @@ class NgBookRepeat implements DoCheck {
 
 @Component({
   selector: 'template-sample-app',
-  directives: [NgBookRepeat],
   template: `
   <ul>
     <li *ngBookRepeat="let p of people">
@@ -107,5 +107,14 @@ export class ForTemplateSampleApp {
     age.value = '';
   }
 }
+
+@NgModule({
+  declarations: [
+    ForTemplateSampleApp,
+    NgBookRepeat
+  ],
+  exports: [ ForTemplateSampleApp ]
+})
+export class ForTemplateSampleAppModule {}
 
 

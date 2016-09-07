@@ -18,6 +18,7 @@ because of now ng2 hasn't release version, update is fast ...
 | R34|2016-06-17|rc2|
 | R35|2016-07-01|rc4|
 | R37|2016-08-11|rc5|
+| R39|2016-09-07|rc6|
 
 ### 4 latest change
 I will set the latest branch as the default branch.

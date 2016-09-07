@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   Validators,
@@ -10,7 +8,6 @@ import {
 
 @Component({
   selector: 'demo-form-with-events',
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: with events</h2>

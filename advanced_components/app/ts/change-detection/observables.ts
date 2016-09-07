@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'observable',
-  inputs: ['items'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <div>
@@ -17,7 +16,7 @@ import { Observable } from 'rxjs/Rx';
   </div>
   `
 })
-class ObservableCmp {
+export class ObservableCmp {
   @Input() items: Observable<number>;
   counter = 0;
 
@@ -39,7 +38,6 @@ class ObservableCmp {
 
 @Component({
   selector: 'change-detection-sample-app',
-  directives: [ObservableCmp],
   template: `
   <observable [items]="itemObservable"></observable>
   `

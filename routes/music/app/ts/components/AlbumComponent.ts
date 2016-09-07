@@ -2,8 +2,7 @@
  * Angular
  */
 import {Component, OnInit} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
-import {ActivatedRoute, ROUTER_DIRECTIVES} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
  /*
@@ -13,7 +12,6 @@ import {SpotifyService} from 'services/SpotifyService';
 
 @Component({
   selector: 'album',
-  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES],
   template: `
   <div *ngIf="album">
     <h1>{{ album.name }}</h1>
@@ -40,7 +38,8 @@ export class AlbumComponent implements OnInit {
   id: string;
   album: Object;
 
-  constructor(public route: ActivatedRoute, public spotify: SpotifyService,
+  constructor(public route: ActivatedRoute,
+              public spotify: SpotifyService, // <-- injected
               public location: Location) {
     route.params.subscribe(params => { this.id = params['id']; });
   }

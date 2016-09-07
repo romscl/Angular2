@@ -1,12 +1,15 @@
 /*
  * Angular
  */
-import {Component} from '@angular/core';
 import {
+  NgModule,
+  Component
+} from '@angular/core';
+import {
+  RouterModule,
   ActivatedRoute,
-  ROUTER_DIRECTIVES,
   Router,
-  RouterConfig
+  Routes
 } from '@angular/router';
 
 /*
@@ -19,7 +22,6 @@ import {ByIdComponent} from 'components/products/ByIdComponent';
 
 @Component({
   selector: 'products',
-  directives: [ROUTER_DIRECTIVES],
   template: `
   <h2>Products</h2>
 
@@ -46,10 +48,30 @@ export class ProductsComponent {
   }
 }
 
-export const routes: RouterConfig = [
+export const routes: Routes = [
   { path: '', redirectTo: 'main' },
   { path: 'main', component: MainComponent },
   { path: ':id', component: ByIdComponent },
   { path: 'interest', component: InterestComponent },
   { path: 'sportify', component: SportifyComponent },
 ];
+
+@NgModule({
+  declarations: [
+    ProductsComponent,
+    MainComponent,
+    InterestComponent,
+    SportifyComponent,
+    ByIdComponent
+  ],
+  exports: [
+    ProductsComponent,
+    MainComponent,
+    InterestComponent,
+    SportifyComponent,
+    ByIdComponent
+  ],
+  imports: [ RouterModule ]
+})
+export class ProductsComponentModule {}
+

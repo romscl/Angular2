@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   Validators
@@ -9,7 +7,6 @@ import {
 
 @Component({
   selector: 'demo-form-with-validations-shorthand',
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
 <div class="ui raised segment">
   <h2 class="ui header">Demo Form: with validations (shorthand)</h2>
@@ -18,7 +15,7 @@ import {
         class="ui form">
 
     <div class="field"
-      [class.error]="!myForm.find('sku').valid && myForm.find('sku').touched">
+      [class.error]="!myForm.get('sku').valid && myForm.get('sku').touched">
       <label for="skuInput">SKU</label>
       <input type="text"
              id="skuInput"

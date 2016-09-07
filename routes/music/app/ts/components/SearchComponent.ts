@@ -3,10 +3,8 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
 import {
   Router,
-  ROUTER_DIRECTIVES,
   ActivatedRoute,
 } from '@angular/router';
 
@@ -17,7 +15,6 @@ import {SpotifyService} from 'services/SpotifyService';
 
 @Component({
   selector: 'search',
-  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES],
   template: `
   <h1>Search</h1>
 
@@ -73,9 +70,11 @@ export class SearchComponent implements OnInit {
   query: string;
   results: Object;
 
-  constructor(private spotify: SpotifyService, private router: Router,
+  constructor(private spotify: SpotifyService,
+              private router: Router,
               private route: ActivatedRoute) {
-    router.routerState.queryParams
+    this.route
+      .queryParams
       .subscribe(params => { this.query = params['query'] || ''; });
   }
 
@@ -89,6 +88,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
+    console.log('this.query', this.query);
     if (!this.query) {
       return;
     }

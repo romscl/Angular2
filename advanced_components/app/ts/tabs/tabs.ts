@@ -1,18 +1,15 @@
 import {
+  NgModule,
   Component,
-  Directive,
-  ElementRef,
-  Query,
   QueryList,
-  ContentChildren,
   AfterContentInit,
-  Input
+  Input,
+  ContentChildren
 } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'tab',
-  inputs: ['title'],
   template: `
   <div class="ui bottom attached tab segment"
        [class.active]="active">
@@ -45,10 +42,9 @@ class Tab {
   `
 })
 class Tabset implements AfterContentInit {
-  tabs: QueryList<Tab>;
+  @ContentChildren(Tab) tabs: QueryList<Tab>;
 
-  constructor(@Query(Tab) tabs:QueryList<Tab>) {
-    this.tabs = tabs;
+  constructor() {
   }
 
   ngAfterContentInit() {
@@ -63,7 +59,6 @@ class Tabset implements AfterContentInit {
 
 @Component({
   selector: 'tabs-sample-app',
-  directives: [Tabset, Tab],
   template: `
   <tabset>
     <tab title="First tab">
@@ -90,4 +85,14 @@ export class TabsSampleApp {
   }
 }
 
+@NgModule({
+  declarations: [
+    TabsSampleApp,
+    Tabset,
+    Tab
+  ],
+  imports: [ CommonModule ],
+  exports: [ TabsSampleApp ]
+})
+export class TabsSampleAppModule {}
 

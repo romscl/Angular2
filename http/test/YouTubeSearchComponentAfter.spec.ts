@@ -1,25 +1,16 @@
 /// <reference path="./typings/karma-read-json.d.ts" />
-import {provide, NgZone} from '@angular/core';
 import {
-  it,
-  describe,
-  expect,
+  TestBed,
   inject,
   fakeAsync,
-  tick,
-  async,
-  beforeEach,
-  beforeEachProviders
+  tick
 } from '@angular/core/testing';
-import {TestComponentBuilder} from '@angular/core/testing';
 import {MockBackend} from '@angular/http/testing';
 import {
   Http,
   ConnectionBackend,
   BaseRequestOptions,
-  Response,
-  ResponseOptions,
-  RequestMethod,
+  Response
 } from '@angular/http';
 
 import {
@@ -29,14 +20,14 @@ import {
 } from '../app/ts/components/YouTubeSearchComponent';
 
 const response = {
-  "items": [
+  'items': [
     {
-      "id": { "videoId": "VIDEO_ID" },
-      "snippet": {
-        "title": "TITLE",
-        "description": "DESCRIPTION",
-        "thumbnails": {
-          "high": { "url": "THUMBNAIL_URL" }
+      'id': { 'videoId': 'VIDEO_ID' },
+      'snippet': {
+        'title': 'TITLE',
+        'description': 'DESCRIPTION',
+        'thumbnails': {
+          'high': { 'url': 'THUMBNAIL_URL' }
         }
       }
     }
@@ -44,17 +35,19 @@ const response = {
 };
 
 describe('MoreHTTPRequests (after)', () => {
-  beforeEachProviders(() => {
-    return [
-      YouTubeService,
-      BaseRequestOptions,
-      MockBackend,
-      provide(YOUTUBE_API_KEY, {useValue: 'YOUTUBE_API_KEY'}),
-      provide(YOUTUBE_API_URL, {useValue: 'YOUTUBE_API_URL'}),
-      provide(Http, {useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-        return new Http(backend, defaultOptions);
-      }, deps: [MockBackend, BaseRequestOptions]}),
-    ]
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        YouTubeService,
+        BaseRequestOptions,
+        MockBackend,
+        { provide: YOUTUBE_API_KEY, useValue: 'YOUTUBE_API_KEY' },
+        { provide: YOUTUBE_API_URL, useValue: 'YOUTUBE_API_URL' },
+        { provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+          return new Http(backend, defaultOptions);
+        }, deps: [MockBackend, BaseRequestOptions] }
+      ]
+    });
   });
 
   describe('search', () => {

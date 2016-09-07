@@ -1,45 +1,41 @@
 import {
-  it,
-  describe,
   inject,
-  fakeAsync,
-  addProviders
+  fakeAsync
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder } from '@angular/core/testing';
 import { MockSpotifyService } from '../mocks/spotify';
 import { SpotifyService } from '../../app/ts/services/SpotifyService';
 import {
-  musicTestProviders,
   advance,
   createRoot,
-  RootCmp
+  RootCmp,
+  configureMusicTests
 } from '../MusicTestHelpers';
 
 describe('SearchComponent', () => {
   beforeEach(() => {
-    addProviders(musicTestProviders());
+    configureMusicTests();
   });
 
   describe('initialization', () => {
     it(`doesn't search for a track without a query`, fakeAsync(
-      inject([Router, TestComponentBuilder, SpotifyService],
-             (router: Router, tcb: TestComponentBuilder,
+      inject([Router, SpotifyService],
+             (router: Router,
               mockSpotifyService: MockSpotifyService) => {
                 const searchSpy = mockSpotifyService.spy('searchTrack');
-                const fixture = createRoot(tcb, router, RootCmp);
+                const fixture = createRoot(router, RootCmp);
                 router.navigateByUrl('/search');
                 advance(fixture);
                 expect(searchSpy).not.toHaveBeenCalled();
               })));
 
     it(`searches for a track if a query is provided`, fakeAsync(
-      inject([Router, TestComponentBuilder, SpotifyService],
-             (router: Router, tcb: TestComponentBuilder,
+      inject([Router, SpotifyService],
+             (router: Router,
               mockSpotifyService: MockSpotifyService) => {
                 const searchSpy = mockSpotifyService.spy('searchTrack');
-                const fixture = createRoot(tcb, router, RootCmp);
+                const fixture = createRoot(router, RootCmp);
                 router.navigateByUrl('/search?query=cats');
                 advance(fixture);
                 expect(searchSpy).toHaveBeenCalled();
@@ -48,9 +44,9 @@ describe('SearchComponent', () => {
 
   describe('submitting a search', () => {
     it('navigates to the Search route', fakeAsync(
-      inject([Router, TestComponentBuilder, Location],
-         (router: Router, tcb: TestComponentBuilder, location: Location) => {
-           const fixture = createRoot(tcb, router, RootCmp);
+      inject([Router, Location],
+         (router: Router, location: Location) => {
+           const fixture = createRoot(router, RootCmp);
            expect(location.path()).toEqual('/');
 
            router.navigateByUrl('/search');
@@ -66,9 +62,9 @@ describe('SearchComponent', () => {
          })));
 
     it('can search with a button', fakeAsync(
-      inject([Router, TestComponentBuilder, Location],
-         (router: Router, tcb: TestComponentBuilder, location: Location) => {
-           const fixture = createRoot(tcb, router, RootCmp);
+      inject([Router, Location],
+         (router: Router, location: Location) => {
+           const fixture = createRoot(router, RootCmp);
            router.navigateByUrl('/search');
            advance(fixture);
            expect(location.path()).toEqual('/search');
@@ -90,10 +86,10 @@ describe('SearchComponent', () => {
 
   describe('renderResults', () => {
     it('displays a message when no results are found', fakeAsync(
-      inject([Router, TestComponentBuilder, Location, SpotifyService],
-         (router: Router, tcb: TestComponentBuilder, 
+      inject([Router, Location, SpotifyService],
+         (router: Router, 
           location: Location, mockSpotifyService: MockSpotifyService) => {
-           const fixture = createRoot(tcb, router, RootCmp);
+           const fixture = createRoot(router, RootCmp);
            router.navigateByUrl('/search');
            advance(fixture);
 
@@ -112,10 +108,10 @@ describe('SearchComponent', () => {
          })));
 
     it('displays results', fakeAsync(
-      inject([Router, TestComponentBuilder, Location, SpotifyService],
-         (router: Router, tcb: TestComponentBuilder, 
+      inject([Router, Location, SpotifyService],
+         (router: Router,
           location: Location, mockSpotifyService: MockSpotifyService) => {
-           const fixture = createRoot(tcb, router, RootCmp);
+           const fixture = createRoot(router, RootCmp);
            router.navigateByUrl('/search');
            advance(fixture);
 

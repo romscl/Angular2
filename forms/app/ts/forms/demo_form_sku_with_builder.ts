@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup
 } from '@angular/forms';
 
 @Component({
   selector: 'demo-form-sku-builder',
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: Sku with Builder</h2>

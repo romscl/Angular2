@@ -1,7 +1,12 @@
-
-
-import { bootstrap } from "@angular/platform-browser-dynamic";
-import { Component } from "@angular/core";
+/**
+ * A basic hello-world Angular 2 app
+ */
+import { 
+  NgModule,
+  Component 
+} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
 @Component({
   selector: 'hello-world',
@@ -14,4 +19,11 @@ import { Component } from "@angular/core";
 class HelloWorld {
 }
 
-bootstrap(HelloWorld);
+@NgModule({
+  declarations: [ HelloWorld ],
+  imports: [ BrowserModule ],
+  bootstrap: [ HelloWorld ],
+})
+class HelloWorldAppModule {}
+
+platformBrowserDynamic().bootstrapModule(HelloWorldAppModule);

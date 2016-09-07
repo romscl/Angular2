@@ -7,10 +7,11 @@
  */
 
 import {
-  Component,
-  provide
+  Component
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import {
   createStore,
   Store,
@@ -32,7 +33,6 @@ let store: Store<AppState> = createStore<AppState>(
 
 @Component({
   selector: 'minimal-redux-app',
-  directives: [ CounterComponent ],
   template: `
   <div>
     <counter-component>
@@ -43,16 +43,28 @@ let store: Store<AppState> = createStore<AppState>(
 class CounterApp {
 }
 
-bootstrap(CounterApp, [
-  provide(AppStore, { useValue: store }),
-])
-.catch(err => console.error(err));
+@NgModule({
+  declarations: [
+    CounterApp,
+    CounterComponent
+  ],
+  imports: [ BrowserModule ],
+  bootstrap: [ CounterApp ],
+  providers: [
+    {provide: AppStore, useValue: store }
+  ]
+
+})
+class CounterAppAppModule {}
+
+platformBrowserDynamic().bootstrapModule(CounterAppAppModule)
+  .catch(err => console.error(err));
 
 // --------------------
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
-require('../app/ts/vendor');
+// require('../app/ts/vendor');
 require('./app-store');
 require('./app-state');
 require('./counter-reducer');

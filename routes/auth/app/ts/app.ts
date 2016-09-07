@@ -1,15 +1,16 @@
 /*
  * Angular
  */
-import {provide, Component} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { Component } from '@angular/core';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import {
-  provideRouter,
-  ROUTER_DIRECTIVES,
+  RouterModule,
   Router,
-  RouterConfig,
+  Routes
 } from '@angular/router';
-import {provideForms} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 /*
@@ -34,7 +35,6 @@ require('css/styles.scss');
 
 @Component({
   selector: 'router-app',
-  directives: [ROUTER_DIRECTIVES, LoginComponent],
   template: `
   <div class="page-header">
     <div class="container">
@@ -65,8 +65,8 @@ class RoutesDemoApp {
   }
 }
 
-const routes: RouterConfig = [
-  { path: '',          redirectTo: 'home', terminal: true },
+const routes: Routes = [
+  { path: '',          redirectTo: 'home', pathMatch: 'full' },
   { path: 'home',      component: HomeComponent },
   { path: 'about',     component: AboutComponent },
   { path: 'contact',   component: ContactComponent },
@@ -74,10 +74,28 @@ const routes: RouterConfig = [
     canActivate: [LoggedInGuard]}
 ];
 
-bootstrap(RoutesDemoApp, [
-  provideRouter(routes),
-  AUTH_PROVIDERS,
-  LoggedInGuard,
-  provide(LocationStrategy, {useClass: HashLocationStrategy}),
-  provideForms()
-]);
+@NgModule({
+  declarations: [
+    RoutesDemoApp,
+    HomeComponent,
+    AboutComponent,
+    ContactComponent,
+    ProtectedComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(routes) // <-- routes
+  ],
+  bootstrap: [ RoutesDemoApp ],
+  providers: [
+    AUTH_PROVIDERS,
+    LoggedInGuard,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ]
+})
+class RoutesDemoAppModule {}
+
+platformBrowserDynamic().bootstrapModule(RoutesDemoAppModule)
+  .catch((err: any) => console.error(err));

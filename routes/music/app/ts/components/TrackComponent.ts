@@ -3,7 +3,6 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -18,7 +17,6 @@ import {SpotifyService} from 'services/SpotifyService';
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track
 @Component({
   selector: 'theTrack',
-  directives: [CORE_DIRECTIVES],
   template: `
   <div *ngIf="track">
     <h1>{{ track.name }}</h1>

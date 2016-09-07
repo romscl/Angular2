@@ -12,7 +12,6 @@ import { Pin } from 'interestAppNg1';
 
 @Component({
   selector: 'pin-controls',
-  directives: [NgIf],
   template: `
 <div class="controls">
   <div class="heart">

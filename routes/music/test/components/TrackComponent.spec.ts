@@ -1,34 +1,29 @@
 import {
-  it,
-  describe,
-  expect,
   inject,
   fakeAsync,
-  addProviders
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder } from '@angular/core/testing';
 import { MockSpotifyService } from '../mocks/spotify';
 import { SpotifyService } from '../../app/ts/services/SpotifyService';
 import {
-  musicTestProviders,
   advance,
   createRoot,
-  RootCmp
+  RootCmp,
+  configureMusicTests
 } from '../MusicTestHelpers';
 
 describe("TrackComponent", () => {
   beforeEach(() => {
-    addProviders(musicTestProviders());
+    configureMusicTests();
   });
 
   describe('initialization', () => {
     it('retrieves the track', fakeAsync(
-      inject([Router, TestComponentBuilder, SpotifyService],
-             (router: Router, tcb: TestComponentBuilder,
+      inject([Router, SpotifyService],
+             (router: Router,
               mockSpotifyService: MockSpotifyService) => {
-        const fixture = createRoot(tcb, router, RootCmp);
+        const fixture = createRoot(router, RootCmp);
         advance(fixture);
 
         router.navigateByUrl('/tracks/1');
@@ -41,9 +36,9 @@ describe("TrackComponent", () => {
 
   describe('back', () => {
     it('returns to the previous location', fakeAsync(
-      inject([Router, TestComponentBuilder, Location],
-             (router: Router, tcb: TestComponentBuilder, location: Location) => {
-        const fixture = createRoot(tcb, router, RootCmp);
+      inject([Router, Location],
+             (router: Router, location: Location) => {
+        const fixture = createRoot(router, RootCmp);
         expect(location.path()).toEqual('/');
 
         router.navigateByUrl('/tracks/1');
@@ -60,10 +55,10 @@ describe("TrackComponent", () => {
 
   describe('renderTrack', () => {
     it('renders track info', fakeAsync(
-      inject([Router, TestComponentBuilder, SpotifyService],
-             (router: Router, tcb: TestComponentBuilder,
+      inject([Router, SpotifyService],
+             (router: Router,
               mockSpotifyService: MockSpotifyService) => {
-        const fixture = createRoot(tcb, router, RootCmp);
+        const fixture = createRoot(router, RootCmp);
 
         let response = {
           name: 'TRACK NAME',

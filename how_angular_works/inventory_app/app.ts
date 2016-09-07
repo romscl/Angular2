@@ -11,7 +11,9 @@ import {
   EventEmitter
 } from '@angular/core';
 
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
 /**
  * Provides a `Product` object
@@ -83,7 +85,6 @@ class PriceDisplay {
   selector: 'product-row',
   inputs: ['product'],
   host: {'class': 'item'},
-  directives: [ProductImage, ProductDepartment, PriceDisplay],
   template: `
   <product-image [product]="product"></product-image>
   <div class="content">
@@ -108,7 +109,6 @@ class ProductRow {
  */
 @Component({
   selector: 'products-list',
-  directives: [ProductRow],
   inputs: ['productList'],
   outputs: ['onProductSelected'],
   template: `
@@ -163,7 +163,6 @@ class ProductsList {
  */
 @Component({
   selector: 'inventory-app',
-  directives: [ProductsList],
   template: `
   <div class="inventory-app">
     <products-list 
@@ -179,17 +178,20 @@ class InventoryApp {
   constructor() {
     this.products = [
       new Product(
-        'MYSHOES', 'Black Running Shoes',
+        'MYSHOES',
+        'Black Running Shoes',
         '/resources/images/products/black-shoes.jpg',
         ['Men', 'Shoes', 'Running Shoes'],
         109.99),
       new Product(
-        'NEATOJACKET', 'Blue Jacket',
+        'NEATOJACKET',
+        'Blue Jacket',
         '/resources/images/products/blue-jacket.jpg',
         ['Women', 'Apparel', 'Jackets & Vests'],
         238.99),
       new Product(
-        'NICEHAT', 'A Nice Black Hat',
+        'NICEHAT',
+        'A Nice Black Hat',
         '/resources/images/products/black-hat.jpg',
         ['Men', 'Accessories', 'Hats'],
         29.99)
@@ -201,4 +203,19 @@ class InventoryApp {
   }
 }
 
-bootstrap(InventoryApp);
+@NgModule({
+  declarations: [ 
+    InventoryApp,
+    ProductImage, 
+    ProductDepartment, 
+    PriceDisplay,
+    ProductRow,
+    ProductsList
+  ],
+  imports: [ BrowserModule ],
+  bootstrap: [ InventoryApp ]
+})
+class InventoryAppModule {}
+
+platformBrowserDynamic().bootstrapModule(InventoryAppModule);
+

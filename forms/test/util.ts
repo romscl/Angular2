@@ -1,10 +1,14 @@
 /*
  * Utility functions for our browser tests
  */
-import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter';
+export function createEvent(eventType: any): Event {
+  var evt: Event = document.createEvent('Event');
+  evt.initEvent(eventType, true, true);
+  return evt;
+}
 
 export function dispatchEvent(element: any, eventType: any) {
- getDOM().dispatchEvent(element, getDOM().createEvent(eventType));
+  element.dispatchEvent(createEvent(eventType));
 }
 
 export class ConsoleSpy {

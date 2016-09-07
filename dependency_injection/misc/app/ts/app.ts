@@ -2,10 +2,11 @@
  * Angular
  */
 import {
-  Component,
-  provide
+  Component
 } from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /*
  * Webpack
@@ -48,9 +49,19 @@ class DiSampleApp {
   }
 }
 
-bootstrap(DiSampleApp, [
-  SimpleService,
-  provide(ParamService, {
-    useFactory: (): ParamService => new ParamService('YOLO')
-  })
-]).catch((err: any) => console.error(err));
+@NgModule({
+  declarations: [ DiSampleApp ],
+  imports: [ BrowserModule ],
+  bootstrap: [ DiSampleApp ],
+  providers: [
+    SimpleService,
+    {
+      provide: ParamService,
+      useFactory: (): ParamService => new ParamService('YOLO')
+    }
+  ]
+})
+class DiSampleAppAppModule {}
+
+platformBrowserDynamic().bootstrapModule(DiSampleAppAppModule)
+  .catch((err: any) => console.error(err));

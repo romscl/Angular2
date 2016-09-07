@@ -1,8 +1,6 @@
 /* tslint:disable:no-string-literal */
 import { Component } from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   Validators,
@@ -26,7 +24,6 @@ function skuValidator(control: FormControl): { [s: string]: boolean } {
 
 @Component({
   selector: 'demo-form-with-custom-validations',
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: with custom validations</h2>
@@ -46,7 +43,7 @@ function skuValidator(control: FormControl): { [s: string]: boolean } {
          <div *ngIf="sku.hasError('required')"
            class="ui error message">SKU is required</div>
          <div *ngIf="sku.hasError('invalidSku')"
-           class="ui error message">SKU must begin with <tt>123</tt></div>
+           class="ui error message">SKU must begin with <span>123</span></div>
       </div>
 
       <div *ngIf="!myForm.valid"

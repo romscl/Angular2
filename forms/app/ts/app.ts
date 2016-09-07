@@ -4,8 +4,13 @@
 import {
   Component
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { disableDeprecatedForms, provideForms } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /* 
  * We're using Webpack to load our CSS which is why we use `require` instead of
@@ -40,14 +45,6 @@ import {DemoFormNgModel} from
  */
 @Component({
   selector: 'forms-demo-app',
-  directives: [DemoFormSku,
-               DemoFormSkuBuilder,
-               DemoFormWithValidationsShorthand,
-               DemoFormWithValidationsExplicit,
-               DemoFormWithCustomValidations,
-               DemoFormWithEvents,
-               DemoFormNgModel
-              ],
   template: `
 <div>
   <demo-form-ng-model></demo-form-ng-model>
@@ -63,8 +60,25 @@ import {DemoFormNgModel} from
 class FormsDemoApp {
 }
 
-bootstrap(FormsDemoApp, [
-  disableDeprecatedForms(),
-  provideForms()
-])
-.catch((err: any) => console.error(err));
+@NgModule({
+  declarations: [
+    FormsDemoApp,
+    DemoFormSku,
+    DemoFormSkuBuilder,
+    DemoFormWithValidationsShorthand,
+    DemoFormWithValidationsExplicit,
+    DemoFormWithCustomValidations,
+    DemoFormWithEvents,
+    DemoFormNgModel
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  bootstrap: [ FormsDemoApp ]
+})
+class FormsDemoAppModule {}
+
+platformBrowserDynamic().bootstrapModule(FormsDemoAppModule)
+  .catch((err: any) => console.error(err));

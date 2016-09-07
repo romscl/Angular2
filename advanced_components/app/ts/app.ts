@@ -7,14 +7,15 @@
  */
 
 import {
-  provide,
+  NgModule,
   Component,
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import {
-  ROUTER_DIRECTIVES,
-  RouterConfig,
-  provideRouter,
+  RouterModule,
+  Routes,
   Router
 } from '@angular/router';
 import {
@@ -22,25 +23,59 @@ import {
   LocationStrategy,
   HashLocationStrategy
 } from '@angular/common';
+import {
+  FormsModule
+} from '@angular/forms';
 import { IntroComponent } from './app/intro_component';
-import { StyleSampleApp } from './styling/styling';
-import { HostSampleApp } from './host/host';
-import { HostSampleApp1 } from './host/steps/host_01';
-import { HostSampleApp2 } from './host/steps/host_02';
-import { HostSampleApp3 } from './host/steps/host_03';
-import { HostSampleApp4 } from './host/steps/host_04';
-import { TabsSampleApp } from './tabs/tabs';
-import { LifecycleSampleApp1 } from './lifecycle-hooks/lifecycle_01';
-import { LifecycleSampleApp2 } from './lifecycle-hooks/lifecycle_02';
-import { LifecycleSampleApp3 } from './lifecycle-hooks/lifecycle_03';
-import { LifecycleSampleApp4 } from './lifecycle-hooks/lifecycle_04';
-import { ForTemplateSampleApp } from './templates/for';
-import { IfTemplateSampleApp } from './templates/if';
-import { TransclusionSampleApp } from './transclusion/transclusion';
-import { OnPushChangeDetectionSampleApp } from './change-detection/onpush';
-import { ObservableChangeDetectionSampleApp } from './change-detection/observables';
+import {
+  StyleSampleApp,
+  StyleSampleAppModule,
+} from './styling/styling';
+import { HostSampleApp, HostSampleAppModule } from './host/host';
+import { HostSampleApp1, HostSampleApp1Module } from './host/steps/host_01';
+import { HostSampleApp2, HostSampleApp2Module } from './host/steps/host_02';
+import { HostSampleApp3, HostSampleApp3Module } from './host/steps/host_03';
+import { HostSampleApp4, HostSampleApp4Module } from './host/steps/host_04';
+import { TabsSampleApp, TabsSampleAppModule } from './tabs/tabs';
+import {
+  LifecycleSampleApp1,
+  LifecycleSampleApp1Module
+} from './lifecycle-hooks/lifecycle_01';
+import {
+  LifecycleSampleApp2,
+  LifecycleSampleApp2Module
+} from './lifecycle-hooks/lifecycle_02';
+import {
+  LifecycleSampleApp3,
+  LifecycleSampleApp3Module
+} from './lifecycle-hooks/lifecycle_03';
+import {
+  LifecycleSampleApp4,
+  LifecycleSampleApp4Module
+} from './lifecycle-hooks/lifecycle_04';
+import {
+  ForTemplateSampleApp,
+  ForTemplateSampleAppModule
+} from './templates/for';
+import {
+  IfTemplateSampleApp,
+  IfTemplateSampleAppModule
+} from './templates/if';
+import { TransclusionSampleApp, Message } from './transclusion/transclusion';
+import {
+  OnPushChangeDetectionSampleApp,
+  DefaultCmp,
+  OnPushCmp
+} from './change-detection/onpush';
+import {
+  ObservableChangeDetectionSampleApp,
+  ObservableCmp
+} from './change-detection/observables';
 import { ExampleDef } from './app/example';
-import { SidebarComponent } from './app/sidebar';
+import {
+  SidebarComponent,
+  SidebarItemComponent
+} from './app/sidebar';
 import './assets';
 
 /*
@@ -67,14 +102,13 @@ let examples: ExampleDef[] = [ /* tslint:disable:max-line-length */
 ]; /* tslint:enable:max-line-length */
 
 // dynamically configure the router based on our ExampleDefs
-const routes: RouterConfig = examples
+const routes: Routes = examples
   .map( (example: ExampleDef) => ({
-    path: example.path, component: example.component, terminal: true
+    path: example.path, component: example.component, pathMatch: 'full'
   }));
 
 @Component({
   selector: 'advanced-components-app',
-  directives: [ SidebarComponent, ROUTER_DIRECTIVES ],
   template: `
   <!-- Menu Bar -->
   <div class="ui menu">
@@ -111,10 +145,46 @@ class AdvancedComponentsApp {
   }
 }
 
-bootstrap(AdvancedComponentsApp, [
-  provideRouter(routes),
-  provide(APP_BASE_HREF,            {useValue: '/'}),
-  provide(LocationStrategy,         {useClass: HashLocationStrategy})
-]).catch((err: any) => console.error(err));
+@NgModule({
+  declarations: [
+    AdvancedComponentsApp,
+    IntroComponent,
+    TransclusionSampleApp,
+    Message,
+    OnPushChangeDetectionSampleApp,
+    DefaultCmp,
+    OnPushCmp,
+    ObservableChangeDetectionSampleApp,
+    ObservableCmp,
+    SidebarComponent,
+    SidebarItemComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(routes), // <-- routes
+    CommonModule,
+    HostSampleAppModule,
+    HostSampleApp1Module,
+    HostSampleApp2Module,
+    HostSampleApp3Module,
+    HostSampleApp4Module,
+    StyleSampleAppModule,
+    LifecycleSampleApp1Module,
+    LifecycleSampleApp2Module,
+    LifecycleSampleApp3Module,
+    LifecycleSampleApp4Module,
+    TabsSampleAppModule,
+    ForTemplateSampleAppModule,
+    IfTemplateSampleAppModule,
+  ],
+  bootstrap: [ AdvancedComponentsApp ],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ]
+})
+class AdvancedComponentsAppModule {}
 
-
+platformBrowserDynamic().bootstrapModule(AdvancedComponentsAppModule)
+  .catch((err: any) => console.error(err));

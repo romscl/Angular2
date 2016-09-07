@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   Validators
@@ -9,7 +7,6 @@ import {
 
 @Component({
   selector: 'demo-form-ng-model',
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: with ng-model</h2>
@@ -27,7 +24,7 @@ import {
         <input type="text"
                id="productNameInput"
                placeholder="Product Name"
-               [formControl]="myForm.find('productName')"
+               [formControl]="myForm.get('productName')"
                [(ngModel)]="productName">
       </div>
 

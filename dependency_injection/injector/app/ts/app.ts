@@ -5,7 +5,9 @@ import {
   Component,
   ReflectiveInjector,
 } from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 
 /*
  * Webpack
@@ -42,4 +44,12 @@ class DiSampleApp {
 }
 
 // no need to add injectables here
-bootstrap(DiSampleApp).catch((err: any) => console.error(err));
+@NgModule({
+  declarations: [ DiSampleApp ],
+  imports: [ BrowserModule ],
+  bootstrap: [ DiSampleApp ]
+})
+class DiSampleAppModule {}
+
+platformBrowserDynamic().bootstrapModule(DiSampleAppModule);
+

@@ -1,8 +1,6 @@
 /* tslint:disable:no-string-literal */
 import { Component } from '@angular/core';
 import {
-  FORM_DIRECTIVES,
-  REACTIVE_FORM_DIRECTIVES,
   FormBuilder,
   FormGroup,
   Validators,
@@ -11,7 +9,6 @@ import {
 
 @Component({
   selector: 'demo-form-with-validations-explicit',
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   template: `
   <div class="ui raised segment">
     <h2 class="ui header">Demo Form: with validations (explicit)</h2>

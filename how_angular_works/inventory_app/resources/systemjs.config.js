@@ -12,22 +12,24 @@
     'rxjs': { defaultExtension: 'js' }
   };
 
-  var packageNames = [
-    '@angular/common',
-    '@angular/compiler',
-    '@angular/core',
-    '@angular/http',
-    '@angular/platform-browser',
-    '@angular/platform-browser-dynamic',
-    '@angular/router',
-    '@angular/router-deprecated',
-    '@angular/testing',
-    '@angular/upgrade',
+  var angularPackages = [
+    'core',
+    'common',
+    'compiler',
+    'platform-browser',
+    'platform-browser-dynamic',
+    'http',
+    'router',
+    'forms',
+    'upgrade'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
-  packageNames.forEach(function(pkgName) {
-    packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
+  angularPackages.forEach(function(pkgName) {
+    packages['@angular/' + pkgName] = { 
+      main: 'bundles/' + pkgName + '.umd.js', 
+      defaultExtension: 'js' 
+    };
   });
 
   var config = {

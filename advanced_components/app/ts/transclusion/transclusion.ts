@@ -1,5 +1,8 @@
-import { Component, Directive, ElementRef } from '@angular/core';
-
+import {
+  Component,
+  Directive,
+  ElementRef
+} from '@angular/core';
 
 @Component({
   selector: '[message]',
@@ -18,7 +21,7 @@ import { Component, Directive, ElementRef } from '@angular/core';
   </div>
   `
 })
-class Message {
+export class Message {
   header: string;
 
   ngOnInit(): void {
@@ -28,7 +31,6 @@ class Message {
 
 @Component({
   selector: 'transclusion-sample-app',
-  directives: [Message],
   template: `
   <div message header="My Message">
     This is the content of the message

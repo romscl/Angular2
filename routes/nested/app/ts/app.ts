@@ -1,16 +1,19 @@
 /*
  * Angular
  */
-import {bind, Component} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { Component } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import {
-  ROUTER_DIRECTIVES,
-  provideRouter,
+  RouterModule,
   Router,
-  RouterConfig
+  Routes
 } from '@angular/router';
-
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {
+  LocationStrategy,
+  HashLocationStrategy
+} from '@angular/common';
 
 /*
  * Components
@@ -18,7 +21,8 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HomeComponent} from 'components/HomeComponent';
 import {
   routes as childRoutes,
-  ProductsComponent
+  ProductsComponent,
+  ProductsComponentModule
 } from 'components/ProductsComponent';
 
 /*
@@ -28,7 +32,6 @@ require('css/styles.scss');
 
 @Component({
   selector: 'router-app',
-  directives: [ROUTER_DIRECTIVES],
   template: `
   <div class="page-header">
     <div class="container">
@@ -52,13 +55,28 @@ class RoutesDemoApp {
   }
 }
 
-const routes: RouterConfig = [
-  { path: '', redirectTo: 'home', terminal: true },
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'products', component: ProductsComponent, children: childRoutes }
 ];
 
-bootstrap(RoutesDemoApp, [
-  provideRouter(routes),
-  bind(LocationStrategy).toClass(HashLocationStrategy)
-]);
+@NgModule({
+  declarations: [
+    RoutesDemoApp,
+    HomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    ProductsComponentModule
+  ],
+  bootstrap: [ RoutesDemoApp ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ]
+})
+class RoutesDemoAppModule {}
+
+platformBrowserDynamic().bootstrapModule(RoutesDemoAppModule)
+  .catch((err: any) => console.error(err));

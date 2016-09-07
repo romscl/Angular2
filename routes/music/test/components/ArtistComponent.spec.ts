@@ -1,34 +1,29 @@
 import {
-  it,
-  describe,
   inject,
   fakeAsync,
-  addProviders
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TestComponentBuilder } from '@angular/compiler/testing';
 import { MockSpotifyService } from '../mocks/spotify';
 import { SpotifyService } from '../../app/ts/services/SpotifyService';
 import {
-  musicTestProviders,
   advance,
   createRoot,
-  RootCmp
+  RootCmp,
+  configureMusicTests
 } from '../MusicTestHelpers';
 
 describe('ArtistComponent', () => {
   beforeEach(() => {
-    addProviders(musicTestProviders());
+    configureMusicTests();
   });
 
   describe('initialization', () => {
     it('retrieves the artist', fakeAsync(
-      inject([Router, SpotifyService, TestComponentBuilder],
+      inject([Router, SpotifyService],
              (router: Router,
-              mockSpotifyService: MockSpotifyService,
-              tcb: TestComponentBuilder) => {
-        const fixture = createRoot(tcb, router, RootCmp);
+              mockSpotifyService: MockSpotifyService) => {
+        const fixture = createRoot(router, RootCmp);
 
         router.navigateByUrl('/artists/2');
         advance(fixture);
@@ -39,9 +34,9 @@ describe('ArtistComponent', () => {
 
   describe('back', () => {
     it('returns to the previous location', fakeAsync(
-      inject([Router, TestComponentBuilder, Location],
-             (router: Router, tcb: TestComponentBuilder, location: Location) => {
-        const fixture = createRoot(tcb, router, RootCmp);
+      inject([Router, Location],
+             (router: Router, location: Location) => {
+        const fixture = createRoot(router, RootCmp);
         expect(location.path()).toEqual('/');
 
         router.navigateByUrl('/artists/2');
@@ -58,10 +53,10 @@ describe('ArtistComponent', () => {
 
   describe('renderArtist', () => {
     it('renders album info', fakeAsync(
-      inject([Router, TestComponentBuilder, SpotifyService],
-             (router: Router, tcb: TestComponentBuilder,
+      inject([Router, SpotifyService],
+             (router: Router,
               mockSpotifyService: MockSpotifyService) => {
-        const fixture = createRoot(tcb, router, RootCmp);
+        const fixture = createRoot(router, RootCmp);
 
         let artist = {name: 'ARTIST NAME', images: [{url: 'IMAGE_1'}]};
         mockSpotifyService.setResponse(artist);

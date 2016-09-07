@@ -8,10 +8,12 @@
 
 import {
   Inject,
-  Component,
-  provide
+  Component
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { FormsModule } from '@angular/forms';
 import {
   createStore,
   Store,
@@ -23,13 +25,20 @@ import {
   AppState,
   default as reducer
 } from './reducers';
+
 import ChatPage from './pages/ChatPage';
+import ChatThreads from './containers/ChatThreads';
+import ChatNavBar from './containers/ChatNavBar';
+import ChatWindow from './containers/ChatWindow';
+import ChatThread from './components/ChatThread';
+import ChatMessage from './components/ChatMessage';
+import { FromNowPipe } from './pipes/FromNowPipe';
+
 import ChatExampleData from './ChatExampleData';
 require('../css/styles.scss');
 
 @Component({
   selector: 'chat-app',
-  directives: [ ChatPage ],
   template: `
   <div>
     <chat-page></chat-page>
@@ -51,10 +60,30 @@ let store: Store<AppState> = createStore<AppState>(
   compose(devtools)
 );
 
-bootstrap(ChatApp, [
-  provide(AppStore, { useFactory: () => store }),
-])
-.catch(err => console.error(err));
+@NgModule({
+  declarations: [
+    ChatApp,
+    ChatPage,
+    ChatThreads,
+    ChatNavBar,
+    ChatWindow,
+    ChatThread,
+    ChatMessage,
+    FromNowPipe
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  bootstrap: [ ChatApp ],
+  providers: [
+    { provide: AppStore, useFactory: () => store }
+  ]
+})
+class ChatAppModule {}
+
+platformBrowserDynamic().bootstrapModule(ChatAppModule)
+  .catch(err => console.error(err));
 
 // --------------------
 // You can ignore these 'require' statements. The code will work without them.

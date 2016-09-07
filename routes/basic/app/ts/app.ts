@@ -1,12 +1,15 @@
 /*
  * Angular Imports
  */
-import {provide, Component} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
 import {
-  ROUTER_DIRECTIVES,
-  provideRouter,
-  RouterConfig,
+  NgModule,
+  Component
+} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {
+  RouterModule,
+  Routes
 } from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
@@ -24,7 +27,6 @@ require('css/styles.scss');
 
 @Component({
   selector: 'router-app',
-  directives: [ROUTER_DIRECTIVES],
   template: `
   <div>
     <nav>
@@ -43,15 +45,31 @@ require('css/styles.scss');
 class RoutesDemoApp {
 }
 
-const routes: RouterConfig = [
-  { path: '', redirectTo: 'home', terminal: true },
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'contactus', redirectTo: 'contact' },
 ];
 
-bootstrap(RoutesDemoApp, [
-  provideRouter(routes), // <-- installs our routes
-  provide(LocationStrategy, {useClass: HashLocationStrategy})
-]);
+@NgModule({
+  declarations: [
+    RoutesDemoApp,
+    HomeComponent,
+    AboutComponent,
+    ContactComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes) // <-- routes
+  ],
+  bootstrap: [ RoutesDemoApp ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ]
+})
+class RoutesDemoAppModule {}
+
+platformBrowserDynamic().bootstrapModule(RoutesDemoAppModule)
+  .catch((err: any) => console.error(err));

@@ -1,13 +1,17 @@
 /*
- * Angular
+ * Angular Imports
  */
-import {provide, Component} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
 import {
-  ROUTER_DIRECTIVES,
-  provideRouter,
-  RouterConfig,
+  NgModule,
+  Component
+} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {
+  RouterModule,
+  Routes
 } from '@angular/router';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 /*
  * Components
@@ -23,15 +27,14 @@ require('css/styles.scss');
 
 @Component({
   selector: 'router-app',
-  directives: [ROUTER_DIRECTIVES],
   template: `
   <div>
     <nav>
       <a>Navigation:</a>
       <ul>
-        <li><a [routerLink]="['/Home']">Home</a></li>
-        <li><a [routerLink]="['/About']">About</a></li>
-        <li><a [routerLink]="['/Contact']">Contact us</a></li>
+        <li><a [routerLink]="['home']">Home</a></li>
+        <li><a [routerLink]="['about']">About</a></li>
+        <li><a [routerLink]="['contact']">Contact us</a></li>
       </ul>
     </nav>
 
@@ -42,14 +45,29 @@ require('css/styles.scss');
 class RoutesDemoApp {
 }
 
-const routes: RouterConfig = [
-  { path: '', redirectTo: 'home', terminal: true },
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'contactus', redirectTo: 'contact' },
 ];
 
-bootstrap(RoutesDemoApp, [
-  provideRouter(routes)
-]);
+@NgModule({
+  declarations: [
+    RoutesDemoApp,
+    HomeComponent,
+    AboutComponent,
+    ContactComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes) // <-- routes
+  ],
+  bootstrap: [ RoutesDemoApp ],
+  providers: [ ]
+})
+class RoutesDemoAppModule {}
+
+platformBrowserDynamic().bootstrapModule(RoutesDemoAppModule)
+  .catch((err: any) => console.error(err));

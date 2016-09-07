@@ -2,15 +2,16 @@
  * Angular Imports
  */
 import {
-  Component,
-  provide
+  Component
 } from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {HTTP_PROVIDERS} from '@angular/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 import {
-  ROUTER_DIRECTIVES,
-  provideRouter,
-  RouterConfig
+  RouterModule,
+  Routes
 } from '@angular/router';
 import {
   LocationStrategy,
@@ -30,7 +31,6 @@ import {AlbumComponent} from 'components/AlbumComponent';
  * Services
  */
 import {SPOTIFY_PROVIDERS} from 'services/SpotifyService';
-import {provideForms} from '@angular/forms';
 
 /*
  * Webpack
@@ -39,7 +39,6 @@ require('css/styles.scss');
 
 @Component({
   selector: 'router-app',
-  directives: [ROUTER_DIRECTIVES],
   template: `
   <router-outlet></router-outlet>
   `
@@ -48,21 +47,35 @@ class RoutesDemoApp {
   query: string;
 }
 
-const routes: RouterConfig = [
-  { path: '', redirectTo: 'search', terminal: true },
+const routes: Routes = [
+  { path: '', redirectTo: 'search', pathMatch: 'full' },
   { path: 'search', component: SearchComponent },
   { path: 'artists/:id', component: ArtistComponent },
   { path: 'tracks/:id', component: TrackComponent },
   { path: 'albums/:id', component: AlbumComponent },
 ];
 
-const ROUTER_PROVIDER = provideRouter(routes);
+@NgModule({
+  declarations: [
+    RoutesDemoApp,
+    SearchComponent,
+    ArtistComponent,
+    TrackComponent,
+    AlbumComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpModule,
+    RouterModule.forRoot(routes) // <-- routes
+  ],
+  bootstrap: [ RoutesDemoApp ],
+  providers: [
+    SPOTIFY_PROVIDERS,
+    {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ]
+})
+class RoutesDemoAppModule {}
 
-bootstrap(RoutesDemoApp, [
-  ROUTER_PROVIDER,
-  HTTP_PROVIDERS,
-  SPOTIFY_PROVIDERS,
-  provide(APP_BASE_HREF,            {useValue: '/'}),
-  provide(LocationStrategy,         {useClass: HashLocationStrategy}),
-  provideForms()
-]).catch((err: any) => console.error(err));
+platformBrowserDynamic().bootstrapModule(RoutesDemoAppModule)
+  .catch((err: any) => console.error(err));

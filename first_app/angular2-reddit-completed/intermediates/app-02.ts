@@ -1,5 +1,9 @@
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Component } from '@angular/core';
+import {
+  NgModule,
+  Component
+} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @Component({
   selector: 'reddit-article',
@@ -39,7 +43,7 @@ import { Component } from '@angular/core';
   `
 })
 class ArticleComponent {
-  votes: number;
+  votes: number
   title: string;
   link: string;
 
@@ -60,7 +64,6 @@ class ArticleComponent {
 
 @Component({
   selector: 'reddit',
-  directives: [ArticleComponent],
   template: `
     <form class="ui large form segment">
       <h3 class="ui header">Add a Link</h3>
@@ -87,12 +90,21 @@ class ArticleComponent {
   `
 })
 class RedditApp {
-  constructor() {
-  }
-
-  addArticle(title: HTMLInputElement, link: HTMLInputElement): void {
+  addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
     console.log(`Adding article title: ${title.value} and link: ${link.value}`);
+    return false;
   }
 }
 
-bootstrap(RedditApp);
+@NgModule({
+  declarations: [
+    RedditApp,
+    ArticleComponent // add this
+  ],
+  imports: [ BrowserModule ],
+  bootstrap: [ RedditApp ]
+})
+class RedditAppModule {}
+
+platformBrowserDynamic().bootstrapModule(RedditAppModule);
+

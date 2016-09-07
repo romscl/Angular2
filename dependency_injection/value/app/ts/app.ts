@@ -2,10 +2,11 @@
  * Angular
  */
 import {
-  Component,
-  provide
+  Component
 } from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /*
  * Services
@@ -34,11 +35,21 @@ class DiValueApp {
 
 const isProduction: boolean = false;
 
-bootstrap(DiValueApp, [
-  provide(ApiService, { useClass: ApiService }),
-  provide(API_URL, {
-    useValue: isProduction ?
-      'https://production-api.sample.com' :
-      'http://dev-api.sample.com'
-  })
-]).catch((err: any) => console.error(err));
+@NgModule({
+  declarations: [ DiValueApp ],
+  imports: [ BrowserModule ],
+  bootstrap: [ DiValueApp ],
+  providers: [
+    { provide: ApiService, useClass: ApiService },
+    {
+      provide: API_URL,
+      useValue: isProduction ?
+        'https://production-api.sample.com' :
+        'http://dev-api.sample.com'
+    }
+  ]
+})
+class DiValueAppAppModule {}
+
+platformBrowserDynamic().bootstrapModule(DiValueAppAppModule)
+  .catch((err: any) => console.error(err));

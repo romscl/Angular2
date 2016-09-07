@@ -1,15 +1,10 @@
-import { Component,
+import {
+  NgModule,
+  Component,
   Directive,
-
-
-
   ViewContainerRef,
   TemplateRef,
-
-
-
 } from '@angular/core';
-
 
 @Directive({
   selector: '[ngBookIf]',
@@ -31,7 +26,6 @@ class NgBookIf {
 
 @Component({
   selector: 'template-sample-app',
-  directives: [NgBookIf],
   template: `
   <button class="ui primary button" (click)="toggle()">
     Toggle
@@ -54,5 +48,14 @@ export class IfTemplateSampleApp {
     this.display = !this.display;
   }
 }
+
+@NgModule({
+  declarations: [
+    IfTemplateSampleApp,
+    NgBookIf
+  ],
+  exports: [ IfTemplateSampleApp ]
+})
+export class IfTemplateSampleAppModule {}
 
 

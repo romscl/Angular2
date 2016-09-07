@@ -7,21 +7,32 @@
  */
 
 import {
+  NgModule,
   Component
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {
+  FormsModule
+} from '@angular/forms';
 
 /*
  * Components
  */
 import {ChatNavBar} from './components/ChatNavBar';
-import {ChatThreads} from './components/ChatThreads';
-import {ChatWindow} from './components/ChatWindow';
+import {
+  ChatThreads,
+  ChatThread
+  } from './components/ChatThreads';
+import {
+  ChatWindow,
+  ChatMessage
+  } from './components/ChatWindow';
 
 /*
  * Injectables
  */
-import { servicesInjectables } from './services/services';
+import {servicesInjectables} from './services/services';
 import {utilInjectables} from './util/util';
 
 /*
@@ -42,9 +53,6 @@ require('../css/styles.scss');
 
 @Component({
   selector: 'chat-app',
-  directives: [ChatNavBar,
-               ChatThreads,
-               ChatWindow],
   template: `
   <div>
     <nav-bar></nav-bar>
@@ -63,7 +71,26 @@ class ChatApp {
   }
 }
 
-bootstrap(ChatApp, [ servicesInjectables, utilInjectables ]);
+@NgModule({
+  declarations: [
+    ChatApp,
+    ChatNavBar,
+    ChatThreads,
+    ChatThread,
+    ChatWindow,
+    ChatMessage,
+    utilInjectables
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  bootstrap: [ ChatApp ],
+  providers: [ servicesInjectables ]
+})
+export class ChatAppModule {}
+
+platformBrowserDynamic().bootstrapModule(ChatAppModule);
 
 // --------------------
 // You can ignore these 'require' statements. The code will work without them.

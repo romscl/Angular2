@@ -3,10 +3,11 @@
  */
 import {
   Component,
-  provide,
   Inject,
 } from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /*
  * Services
@@ -36,7 +37,15 @@ class DiSampleApp {
   }
 }
 
-bootstrap(DiSampleApp, [
-  provide(ApiService, { useClass: ApiService })
-])
+@NgModule({
+  declarations: [ DiSampleApp ],
+  imports: [ BrowserModule ],
+  bootstrap: [ DiSampleApp ],
+  providers: [
+    { provide: ApiService, useClass: ApiService }
+  ]
+})
+class DiSampleAppAppModule {}
+
+platformBrowserDynamic().bootstrapModule(DiSampleAppAppModule)
   .catch((err: any) => console.error(err));

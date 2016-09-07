@@ -2,7 +2,6 @@
  * Angular
  */
 import { Component } from '@angular/core';
-import { JsonPipe, CORE_DIRECTIVES } from '@angular/common';
 import {
   Http,
   Response,
@@ -12,8 +11,6 @@ import {
 
 @Component({
   selector: 'more-http',
-  directives: [CORE_DIRECTIVES],
-  pipes: [JsonPipe],
   template: `
   <h2>More Requests</h2>
   <button type="button" (click)="makePost()">Make Post</button>

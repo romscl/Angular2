@@ -1,44 +1,39 @@
 import {
-  it,
-  describe,
-  expect,
+  TestBed,
+  fakeAsync,
   inject,
-  async
 } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/core/testing';
 import {
-  disableDeprecatedForms,
-  provideForms,
-  FormBuilder
+  FormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
-import { DemoFormSkuBuilder } from '../../app/ts/forms/demo_form_sku_with_builder';
+
+import {
+  DemoFormSkuBuilder
+} from '../../app/ts/forms/demo_form_sku_with_builder';
 
 describe('DemoFormSkuBuilder', () => {
-  let providerArr: any[];
+
   beforeEach(() => {
-    providerArr = [
-      disableDeprecatedForms(),
-      provideForms(),
-      FormBuilder
-    ];
+    TestBed.configureTestingModule({
+      imports: [ FormsModule, ReactiveFormsModule ],
+      declarations: [ DemoFormSkuBuilder ]
+    });
   });
 
-  it('initializes sku', async(inject([TestComponentBuilder], (tcb) => {
-    let fb = new FormBuilder();
-    return tcb.overrideProviders(DemoFormSkuBuilder, providerArr)
-              .createAsync(DemoFormSkuBuilder)
-              .then((fixture) => {
-      let comp = fixture.debugElement.componentInstance;
-      let el = fixture.debugElement.nativeElement;
+  it('initializes sku', fakeAsync((tcb) => {
+    let fixture = TestBed.createComponent(DemoFormSkuBuilder);
 
-      fixture.detectChanges();
+    let comp = fixture.debugElement.componentInstance;
+    let el = fixture.debugElement.nativeElement;
 
-      // checks SKU on myForm
-      expect(comp.myForm.controls.sku.value).toEqual('ABC123');
+    fixture.detectChanges();
 
-      // checks SKU on the input element
-      expect(el.querySelector('form input').value).toEqual('ABC123');
-    });
-  })));
+    // checks SKU on myForm
+    expect(comp.myForm.controls.sku.value).toEqual('ABC123');
+
+    // checks SKU on the input element
+    expect(el.querySelector('form input').value).toEqual('ABC123');
+  }));
 
 });

@@ -1,7 +1,6 @@
 import {
+  NgModule,
   Component,
-  Directive,
-  ElementRef,
   Input,
   SimpleChange,
   IterableDiffers,
@@ -10,13 +9,9 @@ import {
   OnInit,
   OnDestroy,
   DoCheck,
-  OnChanges,
-  AfterContentInit,
-  AfterContentChecked,
-  AfterViewInit,
-  AfterViewChecked,
+  OnChanges
 } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'on-init',
@@ -38,7 +33,6 @@ class OnInitCmp implements OnInit, OnDestroy {
 
 @Component({
   selector: 'on-change',
-  inputs: ['name', 'comment'],
   template: `
   <div class="ui comments">
     <div class="comment">
@@ -66,7 +60,6 @@ class OnChangeCmp implements OnChanges {
 
 @Component({
   selector: 'do-check-item',
-  inputs: ['comment'],
   outputs: ['onRemove'],
   template: `
   <div class="ui feed">
@@ -149,7 +142,6 @@ class DoCheckItem implements DoCheck {
 
 @Component({
   selector: 'do-check',
-  directives: [DoCheckItem],
   template: `
   <do-check-item [comment]="comment"
     *ngFor="let comment of comments" (onRemove)="removeComment($event)">
@@ -215,7 +207,6 @@ class DoCheckCmp implements DoCheck {
 
 @Component({
   selector: 'lifecycle-sample-app',
-  directives: [OnInitCmp, OnChangeCmp, DoCheckCmp],
   template: `
   <h4 class="ui horizontal divider header">
     OnInit and OnDestroy
@@ -276,5 +267,19 @@ export class LifecycleSampleApp3 {
     this.display = !this.display;
   }
 }
+
+@NgModule({
+  declarations: [
+    LifecycleSampleApp3,
+    DoCheckItem,
+    OnInitCmp,
+    OnChangeCmp,
+    DoCheckCmp
+  ],
+  imports: [ CommonModule ],
+  exports: [ LifecycleSampleApp3 ]
+})
+export class LifecycleSampleApp3Module {}
+
 
 

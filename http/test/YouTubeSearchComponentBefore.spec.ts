@@ -1,12 +1,8 @@
-import {provide} from '@angular/core';
 import {
-  it,
-  describe,
-  expect,
+  TestBed,
   inject,
   fakeAsync,
   tick,
-  addProviders
 } from '@angular/core/testing';
 import {MockBackend} from '@angular/http/testing';
 import {
@@ -24,20 +20,21 @@ import {
 
 describe('MoreHTTPRequests (before)', () => {
   beforeEach(() => {
-    addProviders([
-      YouTubeService,
-      BaseRequestOptions,
-      MockBackend,
-      provide(YOUTUBE_API_KEY, {useValue: 'YOUTUBE_API_KEY'}),
-      provide(YOUTUBE_API_URL, {useValue: 'YOUTUBE_API_URL'}),
-      provide(Http, {
-        useFactory: (backend: ConnectionBackend,
-                     defaultOptions: BaseRequestOptions) => {
-                       return new Http(backend, defaultOptions);
-                     },
-        deps: [MockBackend, BaseRequestOptions]
-      }),
-    ]);
+    TestBed.configureTestingModule({
+      providers: [
+        YouTubeService,
+        BaseRequestOptions,
+        MockBackend,
+        { provide: YOUTUBE_API_KEY, useValue: 'YOUTUBE_API_KEY' },
+        { provide: YOUTUBE_API_URL, useValue: 'YOUTUBE_API_URL' },
+        { provide: Http,
+          useFactory: (backend: ConnectionBackend,
+                       defaultOptions: BaseRequestOptions) => {
+                         return new Http(backend, defaultOptions);
+                       }, deps: [MockBackend, BaseRequestOptions] }
+      ]
+    });
+
   });
 
   describe('search', () => {
