@@ -1,4 +1,5 @@
 var webpack             = require('webpack'),
+var webpack             = require('webpack'),
     ReloadPlugin        = require('webpack-reload-plugin'),
     path                = require('path'),
     ChunkManifestPlugin = require('chunk-manifest-webpack-plugin'),
