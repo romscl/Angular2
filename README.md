@@ -28,7 +28,9 @@ I will set the latest branch as the default branch.
 ### 5、other
 welcome to [xiaomo's blog](http://blog.xiaomo.info).
 
-[click to join us](http://jq.qq.com/?_wv=1027&k=29LUKS8)  
+[click to join us](http://jq.qq.com/?_wv=1027&k=29LUKS8)
+
+if you hava any questions,welcome new [issue](https://github.com/AngularLovers/angular2/issues).
 
 last, introduce a web site [angular.cn](http://angular.cn)
 
