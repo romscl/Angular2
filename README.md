@@ -1,4 +1,4 @@
-[![if you feel it helpful,please give a star](http://static.xiaomo.info/images/star.jpg)](https://github.com/qq83387856/angular2)     
+[![if you feel it helpful,please give a star](http://xiaomo.info/static/images/star.jpg)](https://github.com/syoubaku/angular2)     
 [welcome concat me](http://blog.xiaomo.info/about) 
 
 ### if you feel it helpful for you ,I hope that you can give a star. thank you!! also,there is a angular2-demo-project,if you need you can clone it.[angular2-demo](https://github.com/qq83387856/angular2-demo)  
