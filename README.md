@@ -31,7 +31,7 @@ welcome to [xiaomo's blog](http://blog.xiaomo.info).
 
 [click to join us](http://jq.qq.com/?_wv=1027&k=29LUKS8)
 
-if you hava any questions,welcome new [issue](https://github.com/syoubaku/angular2/issues).
+if you have any questions,welcome new [issue](https://github.com/syoubaku/angular2/issues).
 
 last, introduce a web site [angular.cn](http://angular.cn)
 
