@@ -1,5 +1,6 @@
 import {
   Component,
+  Input,
   Directive,
   NgModule
 } from '@angular/core';
@@ -33,14 +34,13 @@ class Sample {
 
 @Directive({
   selector: '[popup]',
-  inputs: ['message'],
   exportAs: 'popup',
   host: {
     '(click)': 'onClick()'
   }
 })
 class Popup {
-  message: string;
+  @Input() message: string;
 
   ngOnInit(): void {
     console.log('message', this.message);

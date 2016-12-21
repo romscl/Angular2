@@ -129,7 +129,7 @@ class ProductsList {
   productList: Product[];
 
   /**
-   * @ouput onProductSelected - outputs the current 
+   * @output onProductSelected - outputs the current 
    *          Product whenever a new Product is selected
    */
   onProductSelected: EventEmitter<Product>;
@@ -138,7 +138,7 @@ class ProductsList {
    * @property currentProduct - local state containing 
    *             the currently selected `Product`
    */
-  currentProduct: Product;
+  private currentProduct: Product;
 
   constructor() {
     this.onProductSelected = new EventEmitter();

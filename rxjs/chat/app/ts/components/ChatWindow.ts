@@ -27,7 +27,7 @@ import {User, Thread, Message} from '../models';
     <div class="messages"
       [ngClass]="{'msg-sent': !incoming, 'msg-receive': incoming}">
       <p>{{message.text}}</p>
-      <p class="time">{{message.sender}} • {{message.sentAt | fromNow}}</p>
+      <p class="time">{{message.author.name}} • {{message.sentAt | fromNow}}</p>
     </div>
 
     <div class="avatar"

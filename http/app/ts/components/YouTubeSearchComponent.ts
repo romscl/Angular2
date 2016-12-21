@@ -143,7 +143,8 @@ export class SearchBox implements OnInit {
           <h3>{{result.title}}</h3>
           <p>{{result.description}}</p>
           <p><a href="{{result.videoUrl}}"
-                class="btn btn-default" role="button">Watch</a></p>
+                class="btn btn-default" role="button">
+                Watch</a></p>
         </div>
       </div>
     </div>

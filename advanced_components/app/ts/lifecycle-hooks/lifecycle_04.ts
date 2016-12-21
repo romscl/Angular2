@@ -228,15 +228,15 @@ class AftersCmp implements OnInit, OnDestroy, DoCheck,
   counter: number;
 
   constructor() {
-    console.log('AfterCmd --------- [constructor]');
+    console.log('AfterCmp --------- [constructor]');
     this.counter = 1;
   }
   inc() {
-    console.log('AfterCmd --------- [counter]');
+    console.log('AfterCmp --------- [counter]');
     this.counter += 1;
   }
   ngOnInit() {
-    console.log('AfterCmd - OnInit');
+    console.log('AfterCmp - OnInit');
   }
   ngOnDestroy() {
     console.log('AfterCmp - OnDestroy');

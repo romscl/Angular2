@@ -96,9 +96,7 @@ function makeConfig(options) {
     },
     resolve: {
       root: [path.resolve(cwd)],
-      modulesDirectories: [
-        'node_modules', 'app', 'app/ts', '.'
-      ],
+      modulesDirectories: [ 'node_modules', 'app', 'app/ts' ],
       extensions: ["", ".ts", ".js", ".json", ".css"],
       alias: {
         'app': 'app',

@@ -1,6 +1,7 @@
 import {
   NgModule,
   Component,
+  Input,
   Directive,
   ChangeDetectorRef,
   ViewRef,
@@ -13,8 +14,7 @@ import {
 
 
 @Directive({
-  selector: '[ngBookRepeat]',
-  inputs: ['ngBookRepeatOf']
+  selector: '[ngBookRepeat]'
 })
 class NgBookRepeat implements DoCheck {
   private items: any;
@@ -27,7 +27,7 @@ class NgBookRepeat implements DoCheck {
               private changeDetector: ChangeDetectorRef,
               private differs: IterableDiffers) {}
 
-  set ngBookRepeatOf(items) {
+  @Input() set ngBookRepeatOf(items) {
     this.items = items;
     if (this.items && !this.differ) {
       this.differ = this.differs.find(items).create(this.changeDetector);

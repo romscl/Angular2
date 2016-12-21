@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
   `
 })
 class Tab {
-  @Input('title') title: string;
+  @Input() title: string;
   active: boolean = false;
   name: string;
 }

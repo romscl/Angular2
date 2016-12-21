@@ -61,7 +61,7 @@ import {
   IfTemplateSampleApp,
   IfTemplateSampleAppModule
 } from './templates/if';
-import { TransclusionSampleApp, Message } from './transclusion/transclusion';
+import { ContentProjectionSampleApp, Message } from './content-projection/content-projection';
 import {
   OnPushChangeDetectionSampleApp,
   DefaultCmp,
@@ -96,7 +96,7 @@ let examples: ExampleDef[] = [ /* tslint:disable:max-line-length */
   {label: 'Lifecycle 4 - Full',               name: 'Lifecycle4',                 path: 'lifecycle-hooks-4',      component: LifecycleSampleApp4 },
   {label: 'ngBookFor',                        name: 'NgBookFor',                  path: 'ng-book-for',            component: ForTemplateSampleApp },
   {label: 'ngBookIf',                         name: 'NgBookIf',                   path: 'ng-book-if',             component: IfTemplateSampleApp },
-  {label: 'Transclusion',                     name: 'Transclusion',               path: 'transclusion',           component: TransclusionSampleApp },
+  {label: 'Content Projection',               name: 'ContentProjection',          path: 'content-projection',     component: ContentProjectionSampleApp },
   {label: 'Change Detection - OnPush',        name: 'ChangeDetectionOnPush',      path: 'change-detection-onpush', component: OnPushChangeDetectionSampleApp },
   {label: 'Change Detection - Observables',   name: 'ChangeDetectionObservables', path: 'change-detection-observ', component: ObservableChangeDetectionSampleApp },
 ]; /* tslint:enable:max-line-length */
@@ -149,7 +149,7 @@ class AdvancedComponentsApp {
   declarations: [
     AdvancedComponentsApp,
     IntroComponent,
-    TransclusionSampleApp,
+    ContentProjectionSampleApp,
     Message,
     OnPushChangeDetectionSampleApp,
     DefaultCmp,

@@ -1,20 +1,20 @@
 import {
   NgModule,
   Component,
+  Input,
   Directive,
   ViewContainerRef,
   TemplateRef,
 } from '@angular/core';
 
 @Directive({
-  selector: '[ngBookIf]',
-  inputs: ['ngBookIf']
+  selector: '[ngBookIf]'
 })
 class NgBookIf {
   constructor(private viewContainer: ViewContainerRef,
               private template: TemplateRef<any>) {}
 
-  set ngBookIf(condition) {
+  @Input() set ngBookIf(condition) {
     if (condition) {
       this.viewContainer.createEmbeddedView(this.template);
     }

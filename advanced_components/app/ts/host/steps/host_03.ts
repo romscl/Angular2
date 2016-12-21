@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Component, Directive, ElementRef } from '@angular/core';
+import { Component, Input, Directive, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[popup]',
-  inputs: ['message'],
   host: {
     '(click)': 'displayMessage()'
   }
 })
 class Popup {
-  message: String;
+  @Input() message: String;
 
   constructor(_elementRef: ElementRef) {
     console.log(_elementRef);

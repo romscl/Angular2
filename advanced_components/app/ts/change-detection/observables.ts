@@ -30,7 +30,9 @@ export class ObservableCmp {
       if (this.counter % 5 == 0) {
         this.changeDetector.markForCheck();
       }
-    }, null, () => {
+    }, 
+    null, 
+    () => {
       this.changeDetector.markForCheck();
     });
   }

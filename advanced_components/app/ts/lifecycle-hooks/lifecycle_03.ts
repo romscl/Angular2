@@ -50,8 +50,8 @@ class OnInitCmp implements OnInit, OnDestroy {
   `
 })
 class OnChangeCmp implements OnChanges {
-  @Input('name') name: string;
-  @Input('comment') comment: string;
+  @Input() name: string;
+  @Input() comment: string;
 
   ngOnChanges(changes: {[propName: string]: SimpleChange}): void {
     console.log('Changes', changes);
@@ -96,7 +96,7 @@ class OnChangeCmp implements OnChanges {
   `
 })
 class DoCheckItem implements DoCheck {
-  @Input('comment') comment: any;
+  @Input() comment: any;
   onRemove: EventEmitter<any>;
   differ: any;
 
