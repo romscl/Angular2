@@ -42,7 +42,7 @@ require('css/styles.css');
       <div class="navLinks">
         <a [routerLink]="['/home']">Home</a>
         <a [routerLink]="['/about']">About</a>
-        <a [routerLink]="['/contact']">Contact us</a>
+        <a [routerLink]="['/contact']">Contact Us</a>
         <a [routerLink]="['/protected']">Protected</a>
       </div>
     </div>

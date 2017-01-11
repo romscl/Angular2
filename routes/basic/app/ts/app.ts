@@ -34,7 +34,7 @@ require('css/styles.css');
       <ul>
         <li><a [routerLink]="['home']">Home</a></li>
         <li><a [routerLink]="['about']">About</a></li>
-        <li><a [routerLink]="['contact']">Contact us</a></li>
+        <li><a [routerLink]="['contact']">Contact Us</a></li>
       </ul>
     </nav>
 

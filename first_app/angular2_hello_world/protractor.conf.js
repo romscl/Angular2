@@ -28,5 +28,8 @@ exports.config = {
   },
   onPrepare: function() {
     jasmine.getEnv().addReporter(new SpecReporter());
+    return browser.executeScript("alert('Test');").then(function () {
+        return browser.switchTo().alert().accept();
+    });
   }
 };

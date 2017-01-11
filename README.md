@@ -20,6 +20,7 @@
 | R42|2016-10-10|2.1.0|
 | R43|2016-11-31|2.2.0|
 | R45|2016-12-21|2.3.0-rc.0|
+| R47|2017-01-11|2.4.1|
 
 ### 4 latest change
 I will set the latest branch as the default branch.

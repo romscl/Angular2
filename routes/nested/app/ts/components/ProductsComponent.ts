@@ -49,7 +49,7 @@ export class ProductsComponent {
 }
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'main' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainComponent },
   { path: ':id', component: ByIdComponent },
   { path: 'interest', component: InterestComponent },

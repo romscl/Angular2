@@ -70,7 +70,7 @@ function makeConfig(options) {
     },
 
     plugins: [
-      new webpack.IgnorePlugin(/spec\.js$/),
+      new webpack.IgnorePlugin(/spec\.[tj]s$/),
       new webpack.optimize.CommonsChunkPlugin('core.js'),
       new ExtractTextPlugin('styles.css'),
       new webpack.DefinePlugin({
