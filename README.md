@@ -1,9 +1,6 @@
-[![if you feel it helpful,please give a star](http://xiaomo.info/static/images/star.jpg)](https://github.com/syoubaku/angular2)     
-[welcome concat me](http://blog.xiaomo.info/about) 
+[welcome concat me](https://xiaomo.info/about) 
 
 ### if you feel it helpful for you ,I hope that you can give a star. thank you!! also,there is a angular2-demo-project,if you need you can clone it.[angular2-demo](https://github.com/qq83387856/angular2-demo)  
-because of now ng2 hasn't release version, update is fast ...
-   
 >PS:in order to convenient for we use or study, I should offer the pdf.but I can't . If you need it ,please buy it at [https://www.ng-book.com/](https://www.ng-book.com/#packages)    
 
 ### 2、about ng1.5   
