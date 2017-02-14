@@ -2,8 +2,8 @@
 DIR=$(dirname $BATS_TEST_FILENAME)
 
 load "${NGBOOK_ROOT}/scripts/bats/fullstack.bats"
-load '/usr/local/lib/bats-support/load.bash'
-load '/usr/local/lib/bats-assert/load.bash'
+load "${NGBOOK_ROOT}/scripts/bats-support/load.bash"
+load "${NGBOOK_ROOT}/scripts/bats-assert/load.bash"
 
 @test "forms unit tests pass" {
   cd $DIR
@@ -19,7 +19,9 @@ load '/usr/local/lib/bats-assert/load.bash'
 
 
 setup() {
+  echo "travis_fold:start:forms"
   cd $DIR
+  kill_by_port 8080
   kill_by_grep "webpack-dev-server"
   npm run go 3>- &
   true
@@ -27,6 +29,8 @@ setup() {
 
 teardown() {
   cd $DIR
+  kill_by_port 8080
   kill_by_grep "webpack-dev-server"
+  echo "travis_fold:end:forms"
   true
 }

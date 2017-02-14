@@ -23,9 +23,9 @@ describe('ng-book Routes Music App', function() {
     page.clickLinkText(`Back`);
 
     // album 
-    page.clickLinkText(`Kind Of Blue`);
-    expect(page.getAlbumHeaderText()).toMatch(`Kind Of Blue`);
-    page.clickLinkText(`Back`);
+    // page.clickLinkText(`Kind Of Blue`);
+    // expect(page.getAlbumHeaderText()).toMatch(`Kind Of Blue`);
+    // page.clickLinkText(`Back`);
   });
 
 });

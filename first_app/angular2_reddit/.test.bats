@@ -2,8 +2,8 @@
 DIR=$(dirname $BATS_TEST_FILENAME)
 
 load "${NGBOOK_ROOT}/scripts/bats/fullstack.bats"
-load '/usr/local/lib/bats-support/load.bash'
-load '/usr/local/lib/bats-assert/load.bash'
+load "${NGBOOK_ROOT}/scripts/bats-support/load.bash"
+load "${NGBOOK_ROOT}/scripts/bats-assert/load.bash"
 
 @test "angular2_reddit e2e passses" {
   cd $DIR
@@ -13,16 +13,20 @@ load '/usr/local/lib/bats-assert/load.bash'
 }
 
 setup() {
+  echo "travis_fold:start:angular2_reddit"
   cd $DIR
-  TEST_TMP_DIR="$(mktemp -d -t fullstack)"
-  kill_ng_cli
+  TEST_TMP_DIR="$(mktemp -d -t fullstackXXX)"
+  kill_ng_cli || :
+  kill_by_port 4200
   ng serve 3>- &
   true
 }
 
 teardown() {
   cd $DIR
-  kill_ng_cli
+  kill_ng_cli || :
   # temp_del "$TEST_TMP_DIR"
+  kill_by_port 4200
+  echo "travis_fold:end:angular2_reddit"
   true
 }

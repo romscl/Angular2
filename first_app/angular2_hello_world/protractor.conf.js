@@ -10,7 +10,7 @@ exports.config = {
     './e2e/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
@@ -28,8 +28,11 @@ exports.config = {
   },
   onPrepare: function() {
     jasmine.getEnv().addReporter(new SpecReporter());
-    return browser.executeScript("alert('Test');").then(function () {
-        return browser.switchTo().alert().accept();
-    });
+
+    if(!process.env.TRAVIS) {
+      return browser.executeScript("alert('Test');").then(function () {
+          return browser.switchTo().alert().accept();
+      });
+    }
   }
 };
