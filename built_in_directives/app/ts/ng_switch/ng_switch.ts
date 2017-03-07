@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'ng-switch-sample-app',
@@ -34,7 +34,7 @@ export class NgSwitchSampleApp {
     this.choice = 1;
   }
 
-  nextChoice() {
+  nextChoice(): void {
     this.choice += 1;
 
     if (this.choice > 5) {

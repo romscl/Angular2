@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Component, Directive, ElementRef } from '@angular/core';
+import { Component, Directive } from '@angular/core';
 
 @Directive({
   selector: '[popup]'

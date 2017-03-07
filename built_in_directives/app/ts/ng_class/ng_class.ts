@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'style-sample-app',
@@ -66,7 +66,7 @@ export class NgClassSampleApp {
   }
 
   toggleClass(cssClass: string): void {
-    var pos: number = this.classList.indexOf(cssClass);
+    let pos: number = this.classList.indexOf(cssClass);
     if (pos > -1) {
       this.classList.splice(pos, 1);
     } else {

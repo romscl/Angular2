@@ -1,8 +1,6 @@
 import {
   Component,
-  Input,
-  Directive,
-  ElementRef
+  Input
 } from '@angular/core';
 
 @Component({

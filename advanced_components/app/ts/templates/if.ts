@@ -17,8 +17,7 @@ class NgBookIf {
   @Input() set ngBookIf(condition) {
     if (condition) {
       this.viewContainer.createEmbeddedView(this.template);
-    }
-    else {
+    } else {
       this.viewContainer.clear();
     }
   }

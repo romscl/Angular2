@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { Component, ViewEncapsulation } from '@angular/core';
 let externalCSSUrl: string = require('file-loader!./external.css'); // webpack gives a URL
 
@@ -102,12 +102,12 @@ export class StyleSampleApp {
 }
 
 
-const components = [
+const components: any = [
   StyleSampleApp,
   InlineStyle,
   ExternalStyle,
   NativeEncapsulation,
-  NoEncapsulation 
+  NoEncapsulation
 ];
 
 @NgModule({

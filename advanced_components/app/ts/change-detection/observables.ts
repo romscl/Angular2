@@ -18,7 +18,7 @@ import { Observable } from 'rxjs/Rx';
 })
 export class ObservableCmp {
   @Input() items: Observable<number>;
-  counter = 0;
+  counter: number = 0;
 
   constructor(private changeDetector: ChangeDetectorRef) {
   }
@@ -27,11 +27,11 @@ export class ObservableCmp {
     this.items.subscribe((v) => {
       console.log('got value', v);
       this.counter++;
-      if (this.counter % 5 == 0) {
+      if (this.counter % 5 === 0) {
         this.changeDetector.markForCheck();
       }
-    }, 
-    null, 
+    },
+    null,
     () => {
       this.changeDetector.markForCheck();
     });

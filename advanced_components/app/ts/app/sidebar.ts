@@ -36,7 +36,7 @@ import { ExampleDef } from './example';
 export class SidebarItemComponent {
   @Input('item') item: ExampleDef;
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private location: Location) {
   }

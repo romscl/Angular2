@@ -3,10 +3,10 @@
   "description": "This file is an index of the sample code",
   "chapters": [
     {
-      "name": "Writing your First Angular 2 Web Application",
+      "name": "Writing your First Angular Web Application",
       "examples": [
-        "first_app/angular2_hello_world",
-        "first_app/angular2_reddit"
+        "first_app/angular-hello-world",
+        "first_app/angular-reddit"
       ]
     },
     {
@@ -15,18 +15,18 @@
     },
     {
       "name": "How Angular Works",
-      "examples": ["how_angular_works/inventory_app"]
+      "examples": ["how_angular_works/inventory-app"]
     },
     {
       "name": "Built-in Directives",
       "examples": ["built_in_directives"]
     },
     {
-      "name": "Forms in Angular 2",
+      "name": "Forms in Angular",
       "examples": ["forms"]
     },
     {
-      "name": "Data Architecture in Angular 2",
+      "name": "Data Architecture in Angular",
       "examples": []
     },
     {
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "name": "Converting an Angular 1 App to Angular 2",
+      "name": "Converting an AngularJS 1.x App to Angular",
       "examples": [
         "conversion/hybrid"
       ]

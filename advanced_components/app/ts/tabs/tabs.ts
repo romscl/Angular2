@@ -44,14 +44,11 @@ class Tab {
 class Tabset implements AfterContentInit {
   @ContentChildren(Tab) tabs: QueryList<Tab>;
 
-  constructor() {
-  }
-
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     this.tabs.toArray()[0].active = true;
   }
 
-  setActive(tab: Tab) {
+  setActive(tab: Tab): void {
     this.tabs.toArray().forEach((t) => t.active = false);
     tab.active = true;
   }

@@ -106,7 +106,7 @@ class DoCheckItem implements DoCheck {
   }
 
   ngDoCheck(): void {
-    var changes = this.differ.diff(this.comment);
+    let changes = this.differ.diff(this.comment);
 
     if (changes) {
       changes.forEachAddedItem(r => this.logChange('added', r));
@@ -196,7 +196,7 @@ class DoCheckCmp implements DoCheck {
   }
 
   ngDoCheck(): void {
-    var changes = this.differ.diff(this.comments);
+    let changes = this.differ.diff(this.comments);
 
     if (changes) {
       changes.forEachAddedItem(r => console.log('Added', r.item));

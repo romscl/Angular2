@@ -40,7 +40,8 @@ class NgBookRepeat implements DoCheck {
       if (changes) {
 
         changes.forEachAddedItem((change) => {
-          let view = this.viewContainer.createEmbeddedView(this.template,
+          let view = this.viewContainer.createEmbeddedView(
+            this.template,
             {'$implicit': change.item});
           this.views.set(change.item, view);
         });
